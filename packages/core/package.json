@@ -1,4 +1,8 @@
 {
   "name": "@wondocs/core",
-  "private": true
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  }
 }
