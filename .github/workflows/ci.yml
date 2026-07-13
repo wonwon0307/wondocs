@@ -1,0 +1,130 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Quality Checks (Lint, Format, Security)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Project
+        uses: ./.github/actions/prepare
+
+      - name: Check Formatting
+        id: prettier
+        run: |
+          pnpm exec prettier --check . || \
+          echo "- ❌ Formatting issues found" >> error.txt
+
+      - name: Lint
+        id: lint
+        run: |
+          pnpm lint || \
+          echo "- ❌ Lint Check Failed" >> error.txt
+
+      - name: Security Audit
+        id: audit
+        run: |
+          pnpm audit --audit-level=high || \
+          echo "- ❌ Security Audit Failed" >> error.txt
+
+      - name: Check Quality Results
+        if: always()
+        run: |
+          if [ -f error.txt ]; then
+            echo "### Quality Check Failures:" >> $GITHUB_STEP_SUMMARY
+            cat error.txt >> $GITHUB_STEP_SUMMARY
+
+            echo "::error::Some checks failed. See the summary for details."
+            exit 1
+          else
+            echo "🎉 All checks passed!" >> $GITHUB_STEP_SUMMARY
+          fi
+
+  build-and-test:
+    name: Build, Typecheck & Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Project
+        uses: ./.github/actions/prepare
+
+      - name: Build
+        run: pnpm build
+
+      - name: Type Check
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test --coverage --coverage.include="**/*/src/**/*.{ts,tsx}" --coverage.reporter=clover --coverage.reporter=lcov
+
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+
+      - name: Create JUnit Test Report
+        run: pnpm test --reporter=junit --outputFile=test-report.junit.xml
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          report_type: "test_results"
+
+  sonar-scan:
+    name: SonarCloud Scan
+    needs: [quality, build-and-test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write # SonarQube results might need this
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
