@@ -3,11 +3,18 @@ import { readFileSync } from "node:fs";
 import { MetaFileSchema } from "./schema";
 import { type DocsGroup } from "./types";
 
+/**
+ * meta.json에서 schema validation에 실패한 경우, 에러 메시지에 표시할 item의 경로를 변환하는 함수
+ */
 function formatPath(path: PropertyKey[]): string {
+  const formatString = (p: PropertyKey, i: number) => {
+    if (i === 0) return String(p);
+
+    return `.${String(p)}`;
+  };
+
   return path
-    .map((p, i) =>
-      typeof p === "number" ? `[${p}]` : i === 0 ? String(p) : `.${String(p)}`,
-    )
+    .map((p, i) => (typeof p === "number" ? `[${p}]` : formatString(p, i)))
     .join("");
 }
 

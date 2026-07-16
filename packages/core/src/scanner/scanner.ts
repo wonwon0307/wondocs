@@ -14,7 +14,7 @@ interface DocsGroupEntry {
 type Manifest = Record<string, DocsGroup>;
 
 export class Scanner {
-  private config: ResolvedConfig;
+  private readonly config: ResolvedConfig;
 
   constructor(config: ResolvedConfig) {
     this.config = config;
