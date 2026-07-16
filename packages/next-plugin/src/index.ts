@@ -1,1 +1,1 @@
-export { withWonDocs } from "./plugin";
+export { createWonDocs } from "./plugin";

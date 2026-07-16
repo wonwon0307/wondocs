@@ -6,7 +6,7 @@ import { Scanner } from "@wondocs/core/scanner";
 const MANIFEST_MODULE_ID = "#wondocs/manifest";
 const getManifestPath = () => join(process.cwd(), ".wondocs", "manifest.js");
 
-export function withWonDocs(wonDocsConfig: WonDocsConfig = {}) {
+export function createWonDocs(wonDocsConfig: WonDocsConfig = {}) {
   // Returns an async function because Turbopack has no plugin API to hook into
   // individual compilations — scanning runs once when next.config is evaluated.
   return async function (nextConfig: NextConfig = {}): Promise<NextConfig> {
