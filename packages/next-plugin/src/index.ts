@@ -1,0 +1,1 @@
+export { withWonDocs } from "./plugin";
