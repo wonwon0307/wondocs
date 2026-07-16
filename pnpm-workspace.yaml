@@ -1,3 +1,6 @@
 packages:
   - configs/*
   - packages/*
+
+allowBuilds:
+  sharp: true
