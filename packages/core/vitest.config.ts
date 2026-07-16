@@ -5,7 +5,8 @@ import { baseVitestConfig } from "@repo/vitest-config/base";
 const config = defineProject({
   test: {
     root: __dirname,
-    environment: "jsdom",
+    environment: "node",
+    setupFiles: ["./tests/setup.ts"],
   },
 });
 

@@ -1,0 +1,1 @@
+export { getSidebar } from "./getSidebar";
