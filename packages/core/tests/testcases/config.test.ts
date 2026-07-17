@@ -6,6 +6,7 @@ describe("loadConfig", () => {
   it("should load default config when no config is provided", () => {
     const config = loadConfig({});
     expect(config).toEqual({
+      root: process.cwd(),
       contentsDir: `${process.cwd()}/docs`,
       baseUrl: "/",
     });
@@ -17,6 +18,7 @@ describe("loadConfig", () => {
       baseUrl: "/custom/",
     });
     expect(config).toEqual({
+      root: process.cwd(),
       contentsDir: `${process.cwd()}/custom-docs`,
       baseUrl: "/custom/",
     });
