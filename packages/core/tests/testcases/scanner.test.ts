@@ -24,6 +24,7 @@ describe("Scanner", () => {
   });
 
   const config = {
+    root: "/test-root",
     contentsDir: "test-contents",
     baseUrl: "/",
   };
