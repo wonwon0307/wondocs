@@ -5,7 +5,7 @@ import * as fsPromises from "node:fs/promises";
 import { Scanner } from "@/scanner";
 
 vi.mock("@/scanner/meta/scan", () => ({
-  scanMeta: vi.fn().mockReturnValue({
+  scanMeta: vi.fn().mockResolvedValue({
     prefix: "test-prefix",
     items: [
       {
@@ -24,6 +24,7 @@ describe("Scanner", () => {
   });
 
   const config = {
+    root: "/test-root",
     contentsDir: "test-contents",
     baseUrl: "/",
   };
