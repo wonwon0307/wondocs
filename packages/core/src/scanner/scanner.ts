@@ -22,10 +22,12 @@ export class Scanner {
 
   async scan(): Promise<void> {
     const manifest: Manifest = Object.fromEntries(
-      this.detectGroups().map(({ key, path }) => [
-        key,
-        scanMeta(join(path, "meta.json"), key),
-      ]),
+      await Promise.all(
+        this.detectGroups().map(async ({ key, path }) => [
+          key,
+          await scanMeta(join(path, "meta.json"), key),
+        ]),
+      ),
     );
 
     const outDir = join(process.cwd(), ".wondocs");
@@ -57,7 +59,9 @@ export class Scanner {
     }
 
     // root에 디렉토리가 없으면 에러
-    const dirs = entries.filter((e) => e.isDirectory());
+    const dirs = entries.filter(
+      (e) => e.isDirectory() && !e.name.startsWith("."),
+    );
     if (dirs.length === 0) {
       throw new Error(
         `[WonDocs] contentsDir "${contentsDir}" is empty. Add a meta.json (single-group) or subdirectories with meta.json files (multi-group).`,
@@ -89,7 +93,7 @@ export class Scanner {
     } catch (error) {
       await rm(tempFilePath, { force: true });
       throw new Error(
-        `Error writing file "${filePath}": ${error instanceof Error ? error.message : String(error)}`,
+        `[WonDocs] Error writing file "${filePath}": ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
