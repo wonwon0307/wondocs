@@ -7,15 +7,6 @@ vi.mock("node:fs", () => ({
     { name: "group1", isDirectory: () => true, isFile: () => false },
     { name: "group2", isDirectory: () => true, isFile: () => false },
   ]),
-  readFileSync: vi.fn().mockImplementation((path: string) => {
-    if (path.endsWith("meta.json")) {
-      return JSON.stringify({
-        prefix: "test-prefix",
-        items: testItems,
-      });
-    }
-    return "{}";
-  }),
 }));
 
 vi.mock("node:fs/promises", () => ({
@@ -23,4 +14,13 @@ vi.mock("node:fs/promises", () => ({
   rename: vi.fn(),
   rm: vi.fn(),
   writeFile: vi.fn(),
+  readdir: vi.fn().mockResolvedValue([]),
+  readFile: vi.fn().mockImplementation((path: string) => {
+    if (path.endsWith("meta.json")) {
+      return Promise.resolve(
+        JSON.stringify({ prefix: "test-prefix", items: testItems }),
+      );
+    }
+    return Promise.resolve("{}");
+  }),
 }));
