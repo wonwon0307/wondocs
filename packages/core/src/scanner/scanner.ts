@@ -30,7 +30,7 @@ export class Scanner {
       ),
     );
 
-    const outDir = join(process.cwd(), ".wondocs");
+    const outDir = join(this.config.root, ".wondocs");
     await this.atomicWrite(
       join(outDir, "manifest.js"),
       `export default ${JSON.stringify(manifest, null, 2)};\n`,
