@@ -3,9 +3,17 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./*": {
-      "types": "./dist/*/index.d.mts",
-      "default": "./dist/*/index.mjs"
+    "./config": {
+      "types": "./dist/config/index.d.mts",
+      "default": "./dist/config/index.mjs"
+    },
+    "./build": {
+      "types": "./dist/build.d.mts",
+      "default": "./dist/build.mjs"
+    },
+    "./sidebar": {
+      "types": "./dist/sidebar.d.mts",
+      "default": "./dist/sidebar.mjs"
     }
   },
   "scripts": {
