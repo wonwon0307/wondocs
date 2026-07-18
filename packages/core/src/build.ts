@@ -1,17 +1,17 @@
 import { existsSync, readdirSync } from "node:fs";
-import { mkdir, rename, rm, writeFile } from "node:fs/promises";
-import { join, dirname } from "node:path";
+import { join } from "node:path";
 
-import type { ResolvedConfig } from "@/config/types";
+import type { ResolvedConfig } from "./config/types";
 import { scanMeta } from "./meta/scan";
-import { type DocsGroup } from "./meta/types";
+import { type Item } from "./meta/types";
+import { atomicWrite } from "./utils/files";
 
 interface DocsGroupEntry {
   key: string;
   path: string;
 }
 
-type Manifest = Record<string, DocsGroup>;
+type Manifest = Record<string, Item[]>;
 
 export class Scanner {
   private readonly config: ResolvedConfig;
@@ -31,7 +31,7 @@ export class Scanner {
     );
 
     const outDir = join(this.config.root, ".wondocs");
-    await this.atomicWrite(
+    await atomicWrite(
       join(outDir, "manifest.js"),
       `export default ${JSON.stringify(manifest, null, 2)};\n`,
     );
@@ -81,20 +81,5 @@ export class Scanner {
 
     // 모든 조건을 통과하면 그룹 엔트리 반환
     return dirs.map((d) => ({ key: d.name, path: join(contentsDir, d.name) }));
-  }
-
-  private async atomicWrite(filePath: string, content: string): Promise<void> {
-    const tempFilePath = `${filePath}.tmp`;
-
-    try {
-      await mkdir(dirname(filePath), { recursive: true });
-      await writeFile(tempFilePath, content, "utf-8");
-      await rename(tempFilePath, filePath);
-    } catch (error) {
-      await rm(tempFilePath, { force: true });
-      throw new Error(
-        `[WonDocs] Error writing file "${filePath}": ${error instanceof Error ? error.message : String(error)}`,
-      );
-    }
   }
 }
