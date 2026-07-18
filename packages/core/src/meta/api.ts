@@ -1,4 +1,4 @@
-import manifest from "#wondocs/manifest";
+import manifest from "#wondocs/sidebar";
 
 export function getSidebar(key?: string) {
   if (key !== undefined) {
