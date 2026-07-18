@@ -27,7 +27,10 @@ export interface Separator {
 
 export type Item = Link | Group | Separator;
 
-export interface DocsGroup {
-  prefix?: string; // if not given in meta.json, the prefix will be the same as the key
+// manifest is a map of key to sidebar items
+export type SidebarManifest = Record<string, Item[]>;
+
+export type MetaScanResult = {
   items: Item[];
-}
+  hrefs: Set<string>; // collection of all hrefs in the sidebar
+};

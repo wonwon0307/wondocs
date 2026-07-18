@@ -1,15 +1,13 @@
 import { createWonDocs } from "@/plugin";
 
 const loadConfigMock = vi.hoisted(() => vi.fn().mockReturnValue({}));
-const scanMock = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
+const buildMock = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
 
 vi.mock("@wondocs/core/config", () => ({
   loadConfig: loadConfigMock,
 }));
-vi.mock("@wondocs/core/scanner", () => ({
-  Scanner: vi.fn(function () {
-    return { scan: scanMock };
-  }),
+vi.mock("@wondocs/core/build", () => ({
+  buildDocs: buildMock,
 }));
 
 describe("createWonDocs", () => {
@@ -23,6 +21,6 @@ describe("createWonDocs", () => {
     );
 
     expect(loadConfigMock).toHaveBeenCalled();
-    expect(scanMock).toHaveBeenCalled();
+    expect(buildMock).toHaveBeenCalled();
   });
 });

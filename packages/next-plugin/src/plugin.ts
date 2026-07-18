@@ -1,7 +1,7 @@
 import { join } from "node:path";
 import type { NextConfig } from "next";
 import { loadConfig, type WonDocsConfig } from "@wondocs/core/config";
-import { Scanner } from "@wondocs/core/scanner";
+import { buildDocs } from "@wondocs/core/build";
 
 const MANIFEST_MODULE_ID = "#wondocs/manifest";
 const getManifestPath = () => join(process.cwd(), ".wondocs", "manifest.js");
@@ -11,8 +11,7 @@ export function createWonDocs(wonDocsConfig: WonDocsConfig = {}) {
   // individual compilations — scanning runs once when next.config is evaluated.
   return async function (nextConfig: NextConfig = {}): Promise<NextConfig> {
     const resolvedConfig = loadConfig(wonDocsConfig);
-    const scanner = new Scanner(resolvedConfig);
-    await scanner.scan();
+    await buildDocs(resolvedConfig);
 
     const manifestPath = getManifestPath();
 

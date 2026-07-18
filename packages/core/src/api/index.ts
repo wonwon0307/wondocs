@@ -1,1 +1,0 @@
-export { getSidebar } from "./getSidebar";
