@@ -3,6 +3,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
+      "#wondocs/pages": ["./src/wondocs-pages"],
       "#wondocs/sidebar": ["./src/wondocs-sidebar"]
     }
   },
