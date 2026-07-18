@@ -1,11 +1,10 @@
 {
   "name": "@wondocs/core",
   "private": true,
+  "type": "module",
   "exports": {
     "./*": {
       "types": "./dist/*/index.d.mts",
-      "require": "./dist/*/index.cjs",
-      "import": "./dist/*/index.mjs",
       "default": "./dist/*/index.mjs"
     }
   },
