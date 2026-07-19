@@ -19,7 +19,6 @@ export async function compileMdx(filePath: string): Promise<CompileResult> {
   // content는 MDX로 컴파일
   const compiled = await compile(content, {
     outputFormat: "function-body",
-    useDynamicImport: true,
   });
 
   return {
