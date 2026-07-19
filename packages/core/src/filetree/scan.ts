@@ -1,18 +1,18 @@
 import { readdir } from "node:fs/promises";
 import { join, relative } from "node:path";
 
-import type { FileTree, FileTreeScanResult } from "./types";
 import { relPathToSlug } from "@/utils/slug";
+import type { FileTree, FileTreeScanResult } from "./types";
 
 /**
  * filetree를 분석하여 파일과 디렉토리의 구조를 나타내는 트리를 생성하여 반환한다
  */
 export async function scanFileTree(
-  disPath: string,
+  dirPath: string,
   prefix: string,
 ): Promise<FileTreeScanResult> {
   // readdir를 사용하여 디렉토리 내의 모든 파일과 디렉토리를 가져옴
-  const entries = await readdir(disPath, {
+  const entries = await readdir(dirPath, {
     withFileTypes: true,
     recursive: true,
   });
@@ -21,8 +21,8 @@ export async function scanFileTree(
 
   // 각 엔트리를 순회하며 파일트리 구성
   for (const entry of entries) {
-    const absPath = join(entry.parentPath, entry.name);
-    const relPath = relative(disPath, absPath).replace(/\\/g, "/"); // Windows 경로를 Unix 스타일로 변환
+    const absPath = join(entry.parentPath, entry.name); // filetree 안에서는 디렉토리 depth에 제한이 없다
+    const relPath = relative(dirPath, absPath).replace(/\\/g, "/"); // Windows 경로를 Unix 스타일로 변환
 
     // 숨김 파일/디렉토리는 허용하지 않는다.
     if (entry.name.startsWith(".")) {
