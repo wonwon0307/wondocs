@@ -18,6 +18,9 @@ function formatPath(path: PropertyKey[]): string {
     .join("");
 }
 
+/**
+ * meta.json 파일을 읽고, sidebar를 위한 items 배열과 report를 위한 hrefs Set를 생성하여 반환한다
+ */
 export async function scanMeta(
   filePath: string,
   key: string,
