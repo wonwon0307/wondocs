@@ -95,4 +95,10 @@ describe("scanMeta", () => {
       `[WonDocs] Invalid meta.json at "${filePath}"`,
     );
   });
+
+  it("should format the error path as '(root)' when the parsed value itself is not an object", async () => {
+    vi.spyOn(fsPromises, "readFile").mockResolvedValue(JSON.stringify([]));
+
+    await expect(scanMeta(filePath, key)).rejects.toThrow("(root):");
+  });
 });
