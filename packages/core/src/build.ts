@@ -39,12 +39,12 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
   // 3. manifest 파일 2개를 작성한다
   await Promise.all([
     // 1. sidebar.js 작성
-    await atomicWrite(
+    atomicWrite(
       join(outDir, "sidebar.js"),
       `export default ${JSON.stringify(sidebarData, null, 2)};\n`,
     ),
     // 2. pages.js 작성
-    await atomicWrite(
+    atomicWrite(
       join(outDir, "pages.js"),
       `export default ${JSON.stringify(pagesData, null, 2)};\n`,
     ),
