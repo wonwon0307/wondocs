@@ -64,6 +64,7 @@ export async function scanMeta(
   result.data.items.forEach(processItem);
 
   return {
+    prefix,
     items: result.data.items,
     hrefs,
   };

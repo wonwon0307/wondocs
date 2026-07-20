@@ -31,6 +31,7 @@ export type Item = Link | Group | Separator;
 export type SidebarManifest = Record<string, Item[]>;
 
 export type MetaScanResult = {
+  prefix: string;
   items: Item[];
   hrefs: Set<string>; // collection of all hrefs in the sidebar
 };
