@@ -37,7 +37,10 @@ describe("buildDocs", () => {
 
     // 3. build pages
     expect(buildPages).toHaveBeenCalledWith(
-      { "test-leaf": "/path/to/test-leaf.md" },
+      {
+        "test-group/test-child-leaf": "/path/to/test-group/test-child-leaf.md",
+        "test-leaf": "/path/to/test-leaf.md",
+      },
       "/test-root/.wondocs",
     );
 

@@ -1,3 +1,4 @@
+import { type FileTree } from "@/filetree/types";
 import { type Item } from "@/meta/types";
 
 export const testItems: Item[] = [
@@ -84,3 +85,8 @@ export const expectedReturnHrefs: Set<string> = new Set([
   "https://example.com",
   "test-collection/test-child-link-2",
 ]);
+
+export const testTree: FileTree = {
+  "test-leaf": "/path/to/test-leaf.md",
+  "test-group/test-child-leaf": "/path/to/test-group/test-child-leaf.md",
+};

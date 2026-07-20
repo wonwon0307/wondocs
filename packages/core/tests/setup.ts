@@ -1,4 +1,4 @@
-import { testItems } from "./data";
+import { testItems, testTree } from "./data";
 
 vi.mock("node:fs", () => ({
   existsSync: vi.fn().mockReturnValue(true),
@@ -50,7 +50,7 @@ vi.mock("@/filetree/build", () => ({
 }));
 vi.mock("@/filetree/scan", () => ({
   scanFileTree: vi.fn().mockResolvedValue({
-    tree: { "test-leaf": "/path/to/test-leaf.md" },
+    tree: testTree,
     hrefs: new Set(["test-prefix/test-leaf"]),
   }),
 }));
