@@ -15,3 +15,5 @@ export type FileTreeScanResult = {
   tree: FileTree;
   hrefs: Set<string>;
 };
+
+export type PagesManifest<T extends Frontmatter> = Record<string, PagesData<T>>;
