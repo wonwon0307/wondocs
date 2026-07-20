@@ -1,9 +1,9 @@
 import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
-import type { CollectionsEntry } from "./types";
+import type { CollectionEntry } from "./types";
 
-export function detectCollections(contentsDir: string): CollectionsEntry[] {
+export function detectCollections(contentsDir: string): CollectionEntry[] {
   // root에 meta.json이 있으면 single-group 모드, 곧바로 반환
   if (existsSync(join(contentsDir, "meta.json"))) {
     return [{ key: "", path: contentsDir }];
