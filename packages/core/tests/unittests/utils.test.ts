@@ -15,6 +15,34 @@ describe("atomicWrite", () => {
 
     expect(fs.writeFile).toHaveBeenCalledOnce();
   });
+
+  it("cleans up temporary file on error", async () => {
+    const filePath = "/tmp/test-file.txt";
+    const content = "Hello, World!";
+
+    // Simulate an error during writeFile
+    vi.spyOn(fs, "writeFile").mockRejectedValueOnce(new Error("Write error"));
+
+    await expect(atomicWrite(filePath, content)).rejects.toThrow(
+      `[WonDocs] Error writing file "${filePath}": Write error`,
+    );
+
+    expect(fs.rm).toHaveBeenCalledWith(`${filePath}.tmp`, { force: true });
+  });
+
+  it("gracefully handles unknown errors", async () => {
+    const filePath = "/tmp/test-file.txt";
+    const content = "Hello, World!";
+
+    // Simulate an unknown error during writeFile
+    vi.spyOn(fs, "writeFile").mockRejectedValueOnce("Unknown error");
+
+    await expect(atomicWrite(filePath, content)).rejects.toThrow(
+      `[WonDocs] Error writing file "${filePath}": Unknown error`,
+    );
+
+    expect(fs.rm).toHaveBeenCalledWith(`${filePath}.tmp`, { force: true });
+  });
 });
 
 describe("compileMdx", () => {
