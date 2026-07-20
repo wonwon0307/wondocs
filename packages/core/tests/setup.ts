@@ -9,6 +9,7 @@ vi.mock("node:fs", () => ({
   ]),
 }));
 vi.mock("node:fs/promises", () => ({
+  access: vi.fn().mockResolvedValue(undefined),
   mkdir: vi.fn(),
   rename: vi.fn(),
   rm: vi.fn(),
