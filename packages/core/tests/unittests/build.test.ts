@@ -1,3 +1,5 @@
+import * as fs from "fs/promises";
+
 import { buildDocs } from "@/build";
 import { detectCollections } from "@/collection/build";
 import { scanMeta } from "@/meta/scan";
@@ -52,6 +54,24 @@ describe("buildDocs", () => {
     expect(atomicWrite).toHaveBeenCalledWith(
       "/test-root/.wondocs/pages.js",
       expect.stringContaining('"test-leaf"'),
+    );
+
+    // mocked fs access doesn't throw, so .gitignore should not be written
+    expect(atomicWrite).not.toHaveBeenCalledWith(
+      "/test-root/.wondocs/.gitignore",
+      "*\n",
+    );
+  });
+
+  it("should write .gitignore if it does not exist", async () => {
+    vi.spyOn(fs, "access").mockRejectedValueOnce(new Error("File not found"));
+
+    await buildDocs(config);
+
+    // .gitignore은 이미 있다
+    expect(atomicWrite).toHaveBeenCalledWith(
+      "/test-root/.wondocs/.gitignore",
+      "*\n",
     );
   });
 });

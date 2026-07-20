@@ -1,3 +1,4 @@
+import { access } from "node:fs/promises";
 import { join } from "node:path";
 
 import { detectCollections } from "./collection/build";
@@ -18,6 +19,8 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
   const sidebarData: SidebarManifest = {};
   const filetree: FileTree = {};
   const outDir = join(root, ".wondocs");
+
+  await ensureGitignore(outDir);
 
   // 1. 모든 collection을 scan하여 meta.json의 내용과 filetree를 가져온다
   await Promise.all(
@@ -48,6 +51,15 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
   ]);
 
   // 4. TODO: report 작성 및 출력
+}
+
+async function ensureGitignore(outDir: string): Promise<void> {
+  const gitignorePath = join(outDir, ".gitignore");
+  try {
+    await access(gitignorePath);
+  } catch {
+    await atomicWrite(gitignorePath, "*\n");
+  }
 }
 
 async function scanCollection({ key, path }: CollectionEntry) {
