@@ -33,6 +33,9 @@ vi.mock("gray-matter", () => ({
     content: raw,
   })),
 }));
+vi.mock("chokidar", () => ({
+  watch: vi.fn(),
+}));
 
 // mock internal methods for unit testing (exceptions: slug util functions)
 vi.mock("@/collection/build", () => ({

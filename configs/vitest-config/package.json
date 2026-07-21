@@ -7,7 +7,7 @@
     "./base": "./base.ts"
   },
   "devDependencies": {
-    "@vitest/coverage-v8": "^4.1.9",
+    "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^29.1.1"
   }
 }

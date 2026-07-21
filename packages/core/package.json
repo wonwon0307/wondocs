@@ -11,6 +11,10 @@
       "types": "./dist/build.d.mts",
       "default": "./dist/build.mjs"
     },
+    "./watch": {
+      "types": "./dist/watch.d.mts",
+      "default": "./dist/watch.mjs"
+    },
     "./sidebar": {
       "types": "./dist/sidebar.d.mts",
       "default": "./dist/sidebar.mjs"
@@ -25,6 +29,7 @@
   },
   "devDependencies": {
     "@mdx-js/mdx": "^3.1.1",
+    "chokidar": "^5.0.0",
     "gray-matter": "^4.0.3",
     "zod": "^4.4.3"
   }

@@ -68,7 +68,7 @@ describe("buildDocs", () => {
 
     await buildDocs(config);
 
-    // .gitignore은 이미 있다
+    // mocked fs access throws, so .gitignore should be written
     expect(atomicWrite).toHaveBeenCalledWith(
       "/test-root/.wondocs/.gitignore",
       "*\n",
