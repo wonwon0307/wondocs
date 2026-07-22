@@ -20,7 +20,11 @@ function validateConfig(config: ResolvedConfig) {
     mkdirSync(contentsDir, { recursive: true });
   }
 
-  return { root: cwd, contentsDir, baseUrl: config.baseUrl };
+  return {
+    root: cwd,
+    contentsDir,
+    baseUrl: config.baseUrl,
+  };
 }
 
 export function loadConfig(config: WonDocsConfig): ResolvedConfig {
