@@ -14,7 +14,7 @@ describe("watchDocs", () => {
   const config = {
     root: "/test-root",
     contentsDir: "/test-root/docs",
-    baseUrl: "/",
+    mdx: {},
   };
 
   beforeEach(() => {

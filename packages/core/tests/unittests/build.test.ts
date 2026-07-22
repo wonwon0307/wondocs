@@ -15,7 +15,7 @@ describe("buildDocs", () => {
   const config = {
     root: "/test-root",
     contentsDir: "test-contents",
-    baseUrl: "/",
+    mdx: {},
   };
 
   // everything is mocked, so only test if functions are called
@@ -50,6 +50,7 @@ describe("buildDocs", () => {
         "test-leaf": "/path/to/test-leaf.md",
       },
       "/test-root/.wondocs",
+      {},
     );
 
     // 4. write files
