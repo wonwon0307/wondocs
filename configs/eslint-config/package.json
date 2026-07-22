@@ -12,6 +12,6 @@
     "@eslint/json": "^2.0.1",
     "@eslint/markdown": "^8.0.3",
     "globals": "^17.7.0",
-    "typescript-eslint": "^8.64.0"
+    "typescript-eslint": "^8.65.0"
   }
 }
