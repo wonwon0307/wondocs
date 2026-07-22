@@ -34,8 +34,14 @@ describe("buildDocs", () => {
       "/path/to/group2/meta.json",
       "group2",
     );
-    expect(scanFileTree).toHaveBeenCalledWith("/path/to/group1", "test-prefix");
-    expect(scanFileTree).toHaveBeenCalledWith("/path/to/group2", "test-prefix");
+    expect(scanFileTree).toHaveBeenCalledWith(
+      "/path/to/group1",
+      "group1-prefix",
+    );
+    expect(scanFileTree).toHaveBeenCalledWith(
+      "/path/to/group2",
+      "group2-prefix",
+    );
 
     // 3. build pages
     expect(buildPages).toHaveBeenCalledWith(
@@ -72,6 +78,22 @@ describe("buildDocs", () => {
     expect(atomicWrite).toHaveBeenCalledWith(
       "/test-root/.wondocs/.gitignore",
       "*\n",
+    );
+  });
+
+  it("should throw if two collections resolve to the same prefix", async () => {
+    vi.mocked(scanMeta).mockImplementation(() =>
+      Promise.resolve({
+        prefix: "same-prefix",
+        items: [{ type: "link", href: "/test-leaf", label: "Test Leaf" }],
+        links: [
+          { href: "same-prefix/test-leaf", external: false, disabled: false },
+        ],
+      }),
+    );
+
+    await expect(buildDocs(config)).rejects.toThrow(
+      '[WonDocs] Duplicate prefix "same-prefix"',
     );
   });
 });
