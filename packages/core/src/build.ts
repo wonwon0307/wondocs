@@ -51,10 +51,13 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
     }),
   );
 
-  // 2. pages를 build한다
+  // 2. report를 계산하고 출력한다 — broken link가 있으면 여기서 던져서, 잘못된 manifest가 기록되지 않도록 한다
+  printReport(computeReport(allLinks, filetreeHrefs));
+
+  // 3. pages를 build한다
   const pagesData = await buildPages(filetree, outDir);
 
-  // 3. manifest 파일 2개를 작성한다
+  // 4. manifest 파일 2개를 작성한다
   await Promise.all([
     // 1. sidebar.js 작성
     atomicWrite(
@@ -67,9 +70,6 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
       `export default ${JSON.stringify(pagesData, null, 2)};\n`,
     ),
   ]);
-
-  // 4. report 작성 및 출력
-  printReport(computeReport(allLinks, filetreeHrefs));
 }
 
 async function ensureGitignore(outDir: string): Promise<void> {
