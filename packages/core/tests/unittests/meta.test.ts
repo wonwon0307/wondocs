@@ -3,7 +3,7 @@ import * as sidebar from "#wondocs/sidebar";
 
 import { getSidebar } from "@/meta/api";
 import { scanMeta } from "@/meta/scan";
-import { testItems, expectedReturnItems, expectedReturnHrefs } from "../data";
+import { testItems, expectedReturnItems, expectedReturnLinks } from "../data";
 
 vi.unmock("@/meta/scan");
 
@@ -21,7 +21,7 @@ describe("scanMeta", () => {
     // return key as prefix if not given in meta.json
     expect(result.prefix).toEqual(key);
     expect(result.items).toEqual(expectedReturnItems);
-    expect(result.hrefs).toEqual(expectedReturnHrefs);
+    expect(result.links).toEqual(expectedReturnLinks);
   });
 
   it("should handle custom prefix correctly", async () => {
@@ -50,7 +50,53 @@ describe("scanMeta", () => {
         href: `${customPrefix}/test-link`,
       },
     ]);
-    expect(result.hrefs).toEqual(new Set([`${customPrefix}/test-link`]));
+    expect(result.links).toEqual([
+      { href: `${customPrefix}/test-link`, external: false, disabled: false },
+    ]);
+  });
+
+  it("should mark disabled links in the returned links", async () => {
+    vi.spyOn(fsPromises, "readFile").mockResolvedValue(
+      JSON.stringify({
+        items: [
+          {
+            type: "link",
+            label: "Coming Soon",
+            href: "/coming-soon",
+            disabled: true,
+          },
+        ],
+      }),
+    );
+
+    const result = await scanMeta(filePath, key);
+
+    expect(result.links).toEqual([
+      {
+        href: `${key}/coming-soon`,
+        external: false,
+        disabled: true,
+      },
+    ]);
+  });
+
+  it("should throw an error for a duplicate href", async () => {
+    vi.spyOn(fsPromises, "readFile").mockResolvedValue(
+      JSON.stringify({
+        items: [
+          { type: "link", href: "/duplicate" },
+          {
+            type: "group",
+            label: "Nested",
+            items: [{ type: "link", href: "/duplicate" }],
+          },
+        ],
+      }),
+    );
+
+    await expect(scanMeta(filePath, key)).rejects.toThrow(
+      `[WonDocs] Duplicate href "${key}/duplicate" in meta.json at "${filePath}"`,
+    );
   });
 
   it("should throw an error for an invalid json file", async () => {
