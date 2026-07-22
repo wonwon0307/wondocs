@@ -14,7 +14,7 @@ import { type FileTree } from "./filetree/types";
 import { type LinkRef, type SidebarManifest } from "./meta/types";
 
 export async function buildDocs(config: ResolvedConfig): Promise<void> {
-  const { root, contentsDir } = config;
+  const { root, contentsDir, mdx } = config;
 
   const collections = detectCollections(contentsDir);
   const sidebarData: SidebarManifest = {};
@@ -55,7 +55,7 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
   printReport(computeReport(allLinks, filetreeHrefs));
 
   // 3. pages를 build한다
-  const pagesData = await buildPages(filetree, outDir);
+  const pagesData = await buildPages(filetree, outDir, mdx);
 
   // 4. manifest 파일 2개를 작성한다
   await Promise.all([
