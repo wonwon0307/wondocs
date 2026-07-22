@@ -23,7 +23,7 @@ function validateConfig(config: ResolvedConfig) {
   return {
     root: cwd,
     contentsDir,
-    baseUrl: config.baseUrl,
+    mdx: config.mdx,
   };
 }
 
@@ -31,7 +31,7 @@ export function loadConfig(config: WonDocsConfig): ResolvedConfig {
   const DEFAULT_CONFIG: ResolvedConfig = {
     root: process.cwd(),
     contentsDir: "docs/",
-    baseUrl: "/",
+    mdx: {},
   };
 
   return validateConfig({ ...DEFAULT_CONFIG, ...config });
