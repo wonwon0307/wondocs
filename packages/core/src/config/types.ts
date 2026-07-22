@@ -1,3 +1,11 @@
+import type { CompileOptions } from "@mdx-js/mdx";
+
+// @mdx-js/mdx의 compile()에 그대로 전달되는 remark/rehype plugin 옵션
+export type MdxOptions = Pick<
+  CompileOptions,
+  "remarkPlugins" | "rehypePlugins"
+>;
+
 export interface WonDocsConfig {
   /**
    * Contents Directory - where the MDX files are located
@@ -5,10 +13,10 @@ export interface WonDocsConfig {
    */
   contentsDir?: string;
   /**
-   * Base URL - the base URL for all links in the generated sidebar (e.g. if your docs are served from "/docs", set this to "/docs")
-   * @default "/"
+   * MDX compile options - remark/rehype plugins forwarded to @mdx-js/mdx's compile()
+   * @default {}
    */
-  baseUrl?: string;
+  mdx?: MdxOptions;
 }
 
 export type ResolvedConfig = Required<WonDocsConfig> & {
