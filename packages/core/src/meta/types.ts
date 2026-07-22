@@ -30,8 +30,14 @@ export type Item = Link | Group | Separator;
 // manifest is a map of key to sidebar items
 export type SidebarManifest = Record<string, Item[]>;
 
+export type LinkRef = {
+  href: string;
+  external: boolean;
+  disabled: boolean;
+};
+
 export type MetaScanResult = {
   prefix: string;
   items: Item[];
-  hrefs: Set<string>; // collection of all hrefs in the sidebar
+  links: LinkRef[]; // flattened refs to every link in the sidebar, for the build report
 };

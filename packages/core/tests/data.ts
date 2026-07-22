@@ -1,5 +1,5 @@
 import { type FileTree } from "@/filetree/types";
-import { type Item } from "@/meta/types";
+import { type Item, type LinkRef } from "@/meta/types";
 
 export const testItems: Item[] = [
   {
@@ -79,12 +79,20 @@ export const expectedReturnItems: Item[] = [
   },
 ];
 
-export const expectedReturnHrefs: Set<string> = new Set([
-  "test-collection/test-link",
-  "test-collection/test-child-link",
-  "https://example.com",
-  "test-collection/test-child-link-2",
-]);
+export const expectedReturnLinks: LinkRef[] = [
+  { href: "test-collection/test-link", external: false, disabled: false },
+  {
+    href: "test-collection/test-child-link",
+    external: false,
+    disabled: false,
+  },
+  { href: "https://example.com", external: true, disabled: false },
+  {
+    href: "test-collection/test-child-link-2",
+    external: false,
+    disabled: false,
+  },
+];
 
 export const testTree: FileTree = {
   "test-leaf": "/path/to/test-leaf.md",

@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 
 import { MetaFileSchema } from "./schema";
-import type { Item, MetaScanResult } from "./types";
+import type { Item, LinkRef, MetaScanResult } from "./types";
 
 // meta.json에서 schema validation에 실패한 경우, 에러 메시지에 표시할 item의 경로를 변환하는 함수
 function formatPath(path: PropertyKey[]): string {
@@ -19,7 +19,7 @@ function formatPath(path: PropertyKey[]): string {
 }
 
 /**
- * meta.json 파일을 읽고, sidebar를 위한 items 배열과 report를 위한 hrefs Set를 생성하여 반환한다
+ * meta.json 파일을 읽고, sidebar를 위한 items 배열과 report를 위한 links 배열을 생성하여 반환한다
  */
 export async function scanMeta(
   filePath: string,
@@ -46,7 +46,8 @@ export async function scanMeta(
   }
 
   // 통과했다면, href를 처리
-  const hrefs = new Set<string>();
+  const links: LinkRef[] = [];
+  const seenHrefs = new Set<string>();
   const prefix = result.data.prefix ?? key;
 
   // item 1개 처리하는 함수: external flag가 있으면, 그대로 반환하고, 그렇지 않으면 prefix를 붙인다
@@ -55,7 +56,20 @@ export async function scanMeta(
       if (!item.external) {
         item.href = `${prefix}${item.href}`;
       }
-      hrefs.add(item.href);
+
+      // 같은 href가 두 번 이상 등장하면 에러를 던진다
+      if (seenHrefs.has(item.href)) {
+        throw new Error(
+          `[WonDocs] Duplicate href "${item.href}" in meta.json at "${filePath}"`,
+        );
+      }
+      seenHrefs.add(item.href);
+
+      links.push({
+        href: item.href,
+        external: item.external ?? false,
+        disabled: item.disabled ?? false,
+      });
     } else if (item.type === "group") {
       item.items.forEach(processItem);
     }
@@ -66,6 +80,6 @@ export async function scanMeta(
   return {
     prefix,
     items: result.data.items,
-    hrefs,
+    links,
   };
 }

@@ -53,17 +53,23 @@ vi.mock("@/filetree/build", () => ({
   }),
 }));
 vi.mock("@/filetree/scan", () => ({
-  scanFileTree: vi.fn().mockResolvedValue({
-    tree: testTree,
-    hrefs: new Set(["test-prefix/test-leaf"]),
-  }),
+  scanFileTree: vi.fn().mockImplementation((_path: string, prefix: string) =>
+    Promise.resolve({
+      tree: testTree,
+      hrefs: new Set([`${prefix}/test-leaf`]),
+    }),
+  ),
 }));
 vi.mock("@/meta/scan", () => ({
-  scanMeta: vi.fn().mockResolvedValue({
-    prefix: "test-prefix",
-    items: [{ type: "link", href: "/test-leaf", label: "Test Leaf" }],
-    hrefs: new Set(["test-prefix/test-leaf"]),
-  }),
+  scanMeta: vi.fn().mockImplementation((_path: string, key: string) =>
+    Promise.resolve({
+      prefix: `${key}-prefix`,
+      items: [{ type: "link", href: "/test-leaf", label: "Test Leaf" }],
+      links: [
+        { href: `${key}-prefix/test-leaf`, external: false, disabled: false },
+      ],
+    }),
+  ),
 }));
 vi.mock("@/utils/files", () => ({
   atomicWrite: vi.fn().mockResolvedValue(undefined),
