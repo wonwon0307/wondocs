@@ -5,6 +5,7 @@ export default defineConfig([
     entry: [
       "src/config/index.ts",
       "src/build.ts",
+      "src/page.ts",
       "src/sidebar.ts",
       "src/watch.ts",
     ],

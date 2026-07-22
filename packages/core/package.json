@@ -18,6 +18,10 @@
     "./sidebar": {
       "types": "./dist/sidebar.d.mts",
       "default": "./dist/sidebar.mjs"
+    },
+    "./page": {
+      "types": "./dist/page.d.mts",
+      "default": "./dist/page.mjs"
     }
   },
   "scripts": {
