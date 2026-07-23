@@ -47,7 +47,7 @@ export async function scanFileTree(
 
     // 상대 경로를 slug로 변환하여 트리에 추가
     tree[relPathToSlug(relPath)] = absPath;
-    hrefs.add(prefix + relPathToSlug(relPath));
+    hrefs.add(`${prefix}/${relPathToSlug(relPath)}`);
   }
 
   return {
