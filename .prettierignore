@@ -5,5 +5,7 @@
 **/.next/*
 **/.turbo/*
 
+.changeset/*
+
 pnpm-lock.yaml
 pnpm-workspace.yaml
