@@ -1,7 +1,28 @@
 {
   "name": "@wondocs/next-plugin",
-  "private": true,
+  "description": "WonDocs Next.js Plugin - A plugin for integrating WonDocs with Next.js applications.",
+  "version": "0.0.0",
+  "private": false,
   "type": "module",
+  "keywords": [
+    "documentation",
+    "docs",
+    "nextjs",
+    "plugin",
+    "wondocs",
+    "mdx",
+    "markdown",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonwon0307/wondocs.git",
+    "directory": "packages/next-plugin"
+  },
+  "license": "UNLICENSED",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",

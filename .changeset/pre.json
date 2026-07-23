@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@repo/eslint-config": "0.0.0",
+    "@repo/tsconfig": "0.0.0",
+    "@repo/vitest-config": "0.0.0",
+    "@wondocs/core": "0.0.0",
+    "@wondocs/next-plugin": "0.0.0"
+  },
+  "changesets": []
+}
