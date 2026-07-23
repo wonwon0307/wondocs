@@ -1,4 +1,8 @@
-import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
+import {
+  PHASE_DEVELOPMENT_SERVER,
+  PHASE_PRODUCTION_BUILD,
+  PHASE_PRODUCTION_SERVER,
+} from "next/constants";
 
 import { createWonDocs } from "@/plugin";
 
@@ -19,10 +23,14 @@ vi.mock("@wondocs/core/watch", () => ({
 }));
 
 describe("createWonDocs", () => {
-  it("should return a function that returns a NextConfig object", async () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("should call buildDocs in the production build phase", async () => {
     const withWondocs = createWonDocs({});
     const nextConfigPromise = withWondocs({});
-    const nextConfig = await nextConfigPromise("production");
+    const nextConfig = await nextConfigPromise(PHASE_PRODUCTION_BUILD);
 
     expect(nextConfig).toHaveProperty("turbopack");
     expect(nextConfig.turbopack).toHaveProperty("resolveAlias");
@@ -32,6 +40,23 @@ describe("createWonDocs", () => {
 
     expect(loadConfigMock).toHaveBeenCalled();
     expect(buildMock).toHaveBeenCalled();
+  });
+
+  it("should not build or watch in the production server phase (e.g. `next start`)", async () => {
+    const withWondocs = createWonDocs({});
+    const nextConfigPromise = withWondocs({});
+    const nextConfig = await nextConfigPromise(PHASE_PRODUCTION_SERVER);
+
+    // resolveAlias must still point at the already-built .wondocs output
+    expect(nextConfig).toHaveProperty("turbopack");
+    expect(nextConfig.turbopack).toHaveProperty("resolveAlias");
+    expect(nextConfig.turbopack?.resolveAlias).toHaveProperty(
+      "#wondocs/sidebar",
+    );
+
+    // but re-scanning/recompiling docs on every server boot must not happen
+    expect(buildMock).not.toHaveBeenCalled();
+    expect(watchMock).not.toHaveBeenCalled();
   });
 
   it("should call watchDocs in dev phase", async () => {
