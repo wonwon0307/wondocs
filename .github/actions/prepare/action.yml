@@ -19,7 +19,6 @@ runs:
         node-version: ${{ inputs.node-version }}
         cache: "pnpm"
         cache-dependency-path: pnpm-lock.yaml
-        registry-url: "https://npm.pkg.github.com"
 
     - name: Install dependencies
       shell: bash
