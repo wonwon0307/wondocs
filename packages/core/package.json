@@ -1,7 +1,27 @@
 {
   "name": "@wondocs/core",
-  "private": true,
+  "description": "WonDocs Core - The core essential functionalities and utilities for building documentation websites.",
+  "version": "0.0.0",
+  "private": false,
   "type": "module",
+  "keywords": [
+    "documentation",
+    "docs",
+    "core",
+    "wondocs",
+    "mdx",
+    "markdown",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wonwon0307/wondocs.git",
+    "directory": "packages/core"
+  },
+  "license": "UNLICENSED",
+  "files": [
+    "dist"
+  ],
   "exports": {
     "./config": {
       "types": "./dist/config/index.d.mts",
