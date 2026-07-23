@@ -1,6 +1,7 @@
 {
   "name": "@wondocs/next-plugin",
   "private": true,
+  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",
