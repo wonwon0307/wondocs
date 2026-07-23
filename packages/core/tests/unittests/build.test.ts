@@ -62,6 +62,13 @@ describe("buildDocs", () => {
       "/test-root/.wondocs/pages.js",
       expect.stringContaining('"test-leaf"'),
     );
+    // component must survive as a real import() call, not be dropped by JSON.stringify
+    expect(atomicWrite).toHaveBeenCalledWith(
+      "/test-root/.wondocs/pages.js",
+      expect.stringContaining(
+        'component: () => import("./pages/test-leaf.js")',
+      ),
+    );
 
     // mocked fs access doesn't throw, so .gitignore should not be written
     expect(atomicWrite).not.toHaveBeenCalledWith(
