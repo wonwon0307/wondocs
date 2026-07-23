@@ -22,7 +22,7 @@ export async function scanFileTree(
   // 각 엔트리를 순회하며 파일트리 구성
   for (const entry of entries) {
     const absPath = join(entry.parentPath, entry.name); // filetree 안에서는 디렉토리 depth에 제한이 없다
-    const relPath = relative(dirPath, absPath).replace(/\\/g, "/"); // Windows 경로를 Unix 스타일로 변환
+    const relPath = relative(dirPath, absPath).replaceAll("\\", "/"); // Windows 경로를 Unix 스타일로 변환
 
     // 숨김 파일/디렉토리는 허용하지 않는다.
     if (entry.name.startsWith(".")) {
@@ -47,7 +47,7 @@ export async function scanFileTree(
 
     // 상대 경로를 slug로 변환하여 트리에 추가
     tree[relPathToSlug(relPath)] = absPath;
-    hrefs.add(prefix + relPathToSlug(relPath));
+    hrefs.add(`${prefix}/${relPathToSlug(relPath)}`);
   }
 
   return {

@@ -10,6 +10,7 @@ import { atomicWrite } from "@/utils/files";
 describe("buildDocs", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.spyOn(console, "log").mockImplementation(() => {});
   });
 
   const config = {

@@ -23,7 +23,7 @@ describe("scanFileTree", () => {
 
   it("returns an empty tree for an empty directory", async () => {
     vi.spyOn(fs, "readdir").mockResolvedValueOnce([]);
-    const result = await scanFileTree(testDir, "/");
+    const result = await scanFileTree(testDir, "");
     expect(result.tree).toEqual({});
     expect(result.hrefs).toEqual(new Set());
   });
@@ -35,7 +35,7 @@ describe("scanFileTree", () => {
       createTestDirent("subdir", testDir, "directory"),
     ] as any);
 
-    const result = await scanFileTree(testDir, "/");
+    const result = await scanFileTree(testDir, "");
     expect(result.tree).toEqual({
       file1: "testDir/file1.md",
       file2: "testDir/file2.mdx",
@@ -43,12 +43,24 @@ describe("scanFileTree", () => {
     expect(result.hrefs).toEqual(new Set(["/file1", "/file2"]));
   });
 
+  it("prepends a non-empty prefix, separated by a slash", async () => {
+    vi.spyOn(fs, "readdir").mockResolvedValueOnce([
+      createTestDirent("installation.md", testDir),
+    ] as any);
+
+    const result = await scanFileTree(testDir, "guides");
+    expect(result.tree).toEqual({
+      installation: "testDir/installation.md",
+    });
+    expect(result.hrefs).toEqual(new Set(["guides/installation"]));
+  });
+
   it("derives slugs for nested files correctly", async () => {
     vi.spyOn(fs, "readdir").mockResolvedValueOnce([
       createTestDirent("nested/file3.md", testDir),
     ] as any);
 
-    const result = await scanFileTree(testDir, "/");
+    const result = await scanFileTree(testDir, "");
     expect(result.tree).toEqual({
       "nested/file3": "testDir/nested/file3.md",
     });
@@ -60,7 +72,7 @@ describe("scanFileTree", () => {
       createTestDirent("subdir/index.mdx", testDir),
     ] as any);
 
-    const result = await scanFileTree(testDir, "/");
+    const result = await scanFileTree(testDir, "");
     expect(result.tree).toEqual({
       subdir: "testDir/subdir/index.mdx",
     });
@@ -73,7 +85,7 @@ describe("scanFileTree", () => {
       createTestDirent("subdir", testDir, "directory"),
     ] as any);
 
-    const result = await scanFileTree(testDir, "/");
+    const result = await scanFileTree(testDir, "");
     expect(result.tree).toEqual({});
     expect(result.hrefs).toEqual(new Set());
   });
@@ -83,7 +95,7 @@ describe("scanFileTree", () => {
       createTestDirent(".hiddenfile.md", testDir),
     ] as any);
 
-    await expect(scanFileTree(testDir, "/")).rejects.toThrow(
+    await expect(scanFileTree(testDir, "")).rejects.toThrow(
       '[WonDocs] Hidden files or directories are not allowed: ".hiddenfile.md"',
     );
   });
@@ -93,7 +105,7 @@ describe("scanFileTree", () => {
       createTestDirent(".hiddendir", testDir, "directory"),
     ] as any);
 
-    await expect(scanFileTree(testDir, "/")).rejects.toThrow(
+    await expect(scanFileTree(testDir, "")).rejects.toThrow(
       '[WonDocs] Hidden files or directories are not allowed: ".hiddendir"',
     );
   });
@@ -103,7 +115,7 @@ describe("scanFileTree", () => {
       createTestDirent(".hiddendir/file.md", testDir, "file"),
     ] as any);
 
-    await expect(scanFileTree(testDir, "/")).rejects.toThrow(
+    await expect(scanFileTree(testDir, "")).rejects.toThrow(
       '[WonDocs] Hidden files or directories are not allowed: ".hiddendir/file.md"',
     );
   });
@@ -113,7 +125,7 @@ describe("scanFileTree", () => {
       createTestDirent("file.txt", testDir),
     ] as any);
 
-    await expect(scanFileTree(testDir, "/")).rejects.toThrow(
+    await expect(scanFileTree(testDir, "")).rejects.toThrow(
       '[WonDocs] Only .md or .mdx files are allowed: "file.txt"',
     );
   });
