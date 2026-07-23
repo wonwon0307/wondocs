@@ -1,7 +1,7 @@
 {
   "name": "@wondocs/core",
   "description": "WonDocs Core - The core essential functionalities and utilities for building documentation websites.",
-  "version": "0.0.0",
+  "version": "0.1.0-beta.0",
   "private": false,
   "type": "module",
   "keywords": [

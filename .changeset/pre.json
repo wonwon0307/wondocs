@@ -8,5 +8,7 @@
     "@wondocs/core": "0.0.0",
     "@wondocs/next-plugin": "0.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "big-cloths-cover"
+  ]
 }
