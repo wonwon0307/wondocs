@@ -10,7 +10,11 @@ import { atomicWrite } from "./utils/files";
 
 import { type CollectionEntry } from "./collection/types";
 import { type ResolvedConfig } from "./config/types";
-import { type FileTree } from "./filetree/types";
+import {
+  type FileTree,
+  type Frontmatter,
+  type PagesManifest,
+} from "./filetree/types";
 import { type LinkRef, type SidebarManifest } from "./meta/types";
 
 export async function buildDocs(config: ResolvedConfig): Promise<void> {
@@ -65,11 +69,22 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
       `export default ${JSON.stringify(sidebarData, null, 2)};\n`,
     ),
     // 2. pages.js 작성
-    atomicWrite(
-      join(outDir, "pages.js"),
-      `export default ${JSON.stringify(pagesData, null, 2)};\n`,
-    ),
+    atomicWrite(join(outDir, "pages.js"), buildPagesManifest(pagesData)),
   ]);
+}
+
+// pagesData의 component는 함수라 JSON.stringify로 직렬화하면 값이 사라진다 — import() 소스를 직접 생성한다
+function buildPagesManifest<T extends Frontmatter>(
+  pagesData: PagesManifest<T>,
+): string {
+  const entries = Object.entries(pagesData)
+    .map(([slug, { meta }]) => {
+      const importPath = `./pages/${slug}.js`;
+      return `  ${JSON.stringify(slug)}: { component: () => import(${JSON.stringify(importPath)}), meta: ${JSON.stringify(meta)} }`;
+    })
+    .join(",\n");
+
+  return `export default {\n${entries}\n};\n`;
 }
 
 async function ensureGitignore(outDir: string): Promise<void> {
