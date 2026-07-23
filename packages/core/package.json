@@ -22,6 +22,10 @@
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     "./config": {
       "types": "./dist/config/index.d.mts",
