@@ -44,6 +44,9 @@ vi.mock("@/collection/build", () => ({
     { key: "group2", path: "/path/to/group2" },
   ]),
 }));
+vi.mock("@/collection/scaffold", () => ({
+  scaffoldSampleDocs: vi.fn().mockResolvedValue(true),
+}));
 vi.mock("@/filetree/build", () => ({
   buildPages: vi.fn().mockResolvedValue({
     "test-leaf": {
