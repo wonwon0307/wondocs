@@ -3,6 +3,16 @@ import pages from "#wondocs/pages";
 import { normalizeSlug } from "@/utils/slug";
 import type { Frontmatter, PagesData } from "./types";
 
+/**
+ * Looks up a page's lazy component loader and frontmatter from the generated
+ * `#wondocs/pages` manifest.
+ *
+ * @typeParam T - Expected frontmatter shape for this page.
+ * @param slug - Page slug (normalized before lookup, so leading/trailing
+ * slashes and casing don't matter).
+ * @returns The page's `component` loader and `meta` frontmatter.
+ * @throws If no page exists for `slug`.
+ */
 export function getPage<T extends Frontmatter>(slug: string): PagesData<T> {
   const key = normalizeSlug(slug);
 

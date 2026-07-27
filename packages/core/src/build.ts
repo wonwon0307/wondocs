@@ -17,6 +17,16 @@ import {
 } from "./filetree/types";
 import { type LinkRef, type SidebarManifest } from "./meta/types";
 
+/**
+ * Scans every collection under `config.contentsDir`, validates links, and
+ * writes the `.wondocs/sidebar.js` and `.wondocs/pages.js` manifests that
+ * power `getSidebar`/`getPage` at runtime.
+ *
+ * Throws if two collections share the same prefix, or if the link report
+ * finds broken links — in both cases no manifest is written.
+ *
+ * @param config - Resolved WonDocs config (see `loadConfig`).
+ */
 export async function buildDocs(config: ResolvedConfig): Promise<void> {
   const { root, contentsDir, mdx } = config;
 
