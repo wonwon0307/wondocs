@@ -13,6 +13,28 @@ const outDir = join(process.cwd(), ".wondocs");
 
 let watchHandle: { close(): void } | null = null;
 
+/**
+ * Creates a Next.js config wrapper that builds/watches WonDocs content and
+ * wires the generated sidebar/pages modules into Turbopack's resolver.
+ *
+ * @param wonDocsConfig - WonDocs options (contents directory, MDX plugins, etc).
+ * @returns A `withWonDocs` function to wrap your `NextConfig`.
+ *
+ * @example
+ * ```ts
+ * // next.config.ts
+ * import type { NextConfig } from "next";
+ * import { createWonDocs } from "@wondocs/next-plugin";
+ *
+ * const nextConfig: NextConfig = {
+ *   reactCompiler: true,
+ * };
+ *
+ * const withWonDocs = createWonDocs({ contentsDir: "docs/" });
+ *
+ * export default withWonDocs(nextConfig);
+ * ```
+ */
 export function createWonDocs(wonDocsConfig: WonDocsConfig = {}) {
   return function withWonDocs(nextConfig: NextConfig = {}) {
     // Returns an async function because Turbopack has no plugin API to hook into
