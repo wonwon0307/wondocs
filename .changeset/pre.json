@@ -9,6 +9,7 @@
     "@wondocs/next-plugin": "0.0.0"
   },
   "changesets": [
-    "big-cloths-cover"
+    "big-cloths-cover",
+    "ten-taxes-watch"
   ]
 }
