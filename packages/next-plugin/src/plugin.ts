@@ -1,4 +1,4 @@
-import { join } from "node:path";
+import { join, relative, sep } from "node:path";
 import type { NextConfig } from "next";
 import {
   PHASE_DEVELOPMENT_SERVER,
@@ -10,6 +10,14 @@ import { buildDocs } from "@wondocs/core/build";
 import { watchDocs } from "@wondocs/core/watch";
 
 const outDir = join(process.cwd(), ".wondocs");
+
+// Turbopack's resolveAlias doesn't support absolute filesystem paths ("server
+// relative imports are not implemented yet") — it needs a project-relative
+// path, POSIX-separated, with an explicit "./" so it isn't treated as a bare
+// specifier.
+function toProjectRelative(absolutePath: string): string {
+  return `./${relative(process.cwd(), absolutePath).split(sep).join("/")}`;
+}
 
 let watchHandle: { close(): void } | null = null;
 
@@ -61,8 +69,8 @@ export function createWonDocs(wonDocsConfig: WonDocsConfig = {}) {
           ...nextConfig.turbopack,
           resolveAlias: {
             ...nextConfig.turbopack?.resolveAlias,
-            "#wondocs/sidebar": join(outDir, "sidebar.js"),
-            "#wondocs/pages": join(outDir, "pages.js"),
+            "#wondocs/sidebar": toProjectRelative(join(outDir, "sidebar.js")),
+            "#wondocs/pages": toProjectRelative(join(outDir, "pages.js")),
           },
         },
       };
