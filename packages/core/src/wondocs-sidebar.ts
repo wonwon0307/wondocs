@@ -1,4 +1,4 @@
 import type { SidebarManifest } from "@/meta/types";
 
-const manifest: Record<string, SidebarManifest> = {};
+const manifest: SidebarManifest = {};
 export default manifest;
