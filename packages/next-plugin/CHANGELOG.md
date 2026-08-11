@@ -1,5 +1,12 @@
 # @wondocs/next-plugin
 
+## 0.1.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [[`dbce64a`](https://github.com/wonwon0307/wondocs/commit/dbce64a90c3f66f3257cd98ec22bb53bd589b9f2)]:
+  - @wondocs/core@0.1.0-beta.2
+
 ## 0.1.0-beta.1
 
 ### Patch Changes
