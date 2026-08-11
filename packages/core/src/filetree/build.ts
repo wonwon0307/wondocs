@@ -9,7 +9,7 @@ export async function buildPages<T extends Frontmatter>(
   filetree: FileTree,
   outDir: string,
   mdxOptions: MdxOptions = {},
-) {
+): Promise<PagesManifest<T>> {
   const pagesData: PagesManifest<T> = {};
 
   await Promise.all(

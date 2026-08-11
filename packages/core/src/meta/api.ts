@@ -1,5 +1,7 @@
 import manifest from "#wondocs/sidebar";
 
+import type { Item } from "./types";
+
 /**
  * Looks up a sidebar group from the generated `#wondocs/sidebar` manifest.
  *
@@ -8,7 +10,7 @@ import manifest from "#wondocs/sidebar";
  * @returns The sidebar items for that group.
  * @throws If no group exists for `key` (or no default group when `key` is omitted).
  */
-export function getSidebar(key?: string) {
+export function getSidebar(key?: string): Item[] {
   if (key !== undefined) {
     const group = manifest[key];
     if (!group) {
