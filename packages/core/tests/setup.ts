@@ -59,7 +59,7 @@ vi.mock("@/filetree/scan", () => ({
   scanFileTree: vi.fn().mockImplementation((_path: string, prefix: string) =>
     Promise.resolve({
       tree: testTree,
-      hrefs: new Set([`${prefix}/test-leaf`]),
+      hrefs: new Set([`/${prefix}/test-leaf`]),
     }),
   ),
 }));
@@ -69,7 +69,11 @@ vi.mock("@/meta/scan", () => ({
       prefix: `${key}-prefix`,
       items: [{ type: "link", href: "/test-leaf", label: "Test Leaf" }],
       links: [
-        { href: `${key}-prefix/test-leaf`, external: false, disabled: false },
+        {
+          href: `/${key}-prefix/test-leaf`,
+          external: false,
+          disabled: false,
+        },
       ],
     }),
   ),

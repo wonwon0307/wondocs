@@ -6,6 +6,13 @@ export const testItems: Item[] = [
     type: "link",
     label: "Test Link",
     href: "/test-link",
+    items: [
+      {
+        type: "link",
+        label: "Test Sub Link",
+        href: "/test-sub-link",
+      },
+    ],
   },
   {
     type: "group",
@@ -44,7 +51,14 @@ export const expectedReturnItems: Item[] = [
   {
     type: "link",
     label: "Test Link",
-    href: "test-collection/test-link",
+    href: "/test-collection/test-link",
+    items: [
+      {
+        type: "link",
+        label: "Test Sub Link",
+        href: "/test-collection/test-sub-link",
+      },
+    ],
   },
   {
     type: "group",
@@ -53,7 +67,7 @@ export const expectedReturnItems: Item[] = [
       {
         type: "link",
         label: "Test Child Link",
-        href: "test-collection/test-child-link",
+        href: "/test-collection/test-child-link",
       },
     ],
   },
@@ -73,22 +87,27 @@ export const expectedReturnItems: Item[] = [
       {
         type: "link",
         label: "Test Child Link 2",
-        href: "test-collection/test-child-link-2",
+        href: "/test-collection/test-child-link-2",
       },
     ],
   },
 ];
 
 export const expectedReturnLinks: LinkRef[] = [
-  { href: "test-collection/test-link", external: false, disabled: false },
+  { href: "/test-collection/test-link", external: false, disabled: false },
   {
-    href: "test-collection/test-child-link",
+    href: "/test-collection/test-sub-link",
+    external: false,
+    disabled: false,
+  },
+  {
+    href: "/test-collection/test-child-link",
     external: false,
     disabled: false,
   },
   { href: "https://example.com", external: true, disabled: false },
   {
-    href: "test-collection/test-child-link-2",
+    href: "/test-collection/test-child-link-2",
     external: false,
     disabled: false,
   },

@@ -96,7 +96,11 @@ describe("buildDocs", () => {
         prefix: "same-prefix",
         items: [{ type: "link", href: "/test-leaf", label: "Test Leaf" }],
         links: [
-          { href: "same-prefix/test-leaf", external: false, disabled: false },
+          {
+            href: "/same-prefix/test-leaf",
+            external: false,
+            disabled: false,
+          },
         ],
       }),
     );

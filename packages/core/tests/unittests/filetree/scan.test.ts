@@ -52,7 +52,7 @@ describe("scanFileTree", () => {
     expect(result.tree).toEqual({
       installation: "testDir/installation.md",
     });
-    expect(result.hrefs).toEqual(new Set(["guides/installation"]));
+    expect(result.hrefs).toEqual(new Set(["/guides/installation"]));
   });
 
   it("derives slugs for nested files correctly", async () => {
