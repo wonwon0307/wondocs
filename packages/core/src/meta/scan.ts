@@ -70,6 +70,9 @@ export async function scanMeta(
         external: item.external ?? false,
         disabled: item.disabled ?? false,
       });
+
+      // Link도 group처럼 하위 items를 가질 수 있다
+      item.items?.forEach(processItem);
     } else if (item.type === "group") {
       item.items.forEach(processItem);
     }
