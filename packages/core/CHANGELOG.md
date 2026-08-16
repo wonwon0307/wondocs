@@ -1,5 +1,11 @@
 # @wondocs/core
 
+## 0.1.0-beta.3
+
+### Patch Changes
+
+- [#39](https://github.com/wonwon0307/wondocs/pull/39) [`22bd1f8`](https://github.com/wonwon0307/wondocs/commit/22bd1f87b66821847e898bd240b1e0715db124bd) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Bugfix: add leading-slash to fix misleading link bugs and also process children links of another parent link as well
+
 ## 0.1.0-beta.2
 
 ### Patch Changes
