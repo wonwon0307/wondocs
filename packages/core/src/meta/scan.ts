@@ -54,7 +54,7 @@ export async function scanMeta(
   const processItem = (item: Item) => {
     if (item.type === "link") {
       if (!item.external) {
-        item.href = `${prefix}${item.href}`;
+        item.href = prefix ? `/${prefix}${item.href}` : item.href;
       }
 
       // 같은 href가 두 번 이상 등장하면 에러를 던진다
@@ -70,6 +70,9 @@ export async function scanMeta(
         external: item.external ?? false,
         disabled: item.disabled ?? false,
       });
+
+      // Link도 group처럼 하위 items를 가질 수 있다
+      item.items?.forEach(processItem);
     } else if (item.type === "group") {
       item.items.forEach(processItem);
     }

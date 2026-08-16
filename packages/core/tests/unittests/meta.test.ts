@@ -47,11 +47,15 @@ describe("scanMeta", () => {
       {
         type: "link",
         label: "Test Link",
-        href: `${customPrefix}/test-link`,
+        href: `/${customPrefix}/test-link`,
       },
     ]);
     expect(result.links).toEqual([
-      { href: `${customPrefix}/test-link`, external: false, disabled: false },
+      {
+        href: `/${customPrefix}/test-link`,
+        external: false,
+        disabled: false,
+      },
     ]);
   });
 
@@ -73,7 +77,7 @@ describe("scanMeta", () => {
 
     expect(result.links).toEqual([
       {
-        href: `${key}/coming-soon`,
+        href: `/${key}/coming-soon`,
         external: false,
         disabled: true,
       },
@@ -95,7 +99,7 @@ describe("scanMeta", () => {
     );
 
     await expect(scanMeta(filePath, key)).rejects.toThrow(
-      `[WonDocs] Duplicate href "${key}/duplicate" in meta.json at "${filePath}"`,
+      `[WonDocs] Duplicate href "/${key}/duplicate" in meta.json at "${filePath}"`,
     );
   });
 
