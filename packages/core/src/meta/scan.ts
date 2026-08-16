@@ -54,7 +54,7 @@ export async function scanMeta(
   const processItem = (item: Item) => {
     if (item.type === "link") {
       if (!item.external) {
-        item.href = `${prefix}${item.href}`;
+        item.href = prefix ? `/${prefix}${item.href}` : item.href;
       }
 
       // 같은 href가 두 번 이상 등장하면 에러를 던진다
