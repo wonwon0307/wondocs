@@ -58,7 +58,12 @@ vi.mock("@/filetree/build", () => ({
 vi.mock("@/filetree/scan", () => ({
   scanFileTree: vi.fn().mockImplementation((_path: string, prefix: string) =>
     Promise.resolve({
-      tree: testTree,
+      tree: Object.fromEntries(
+        Object.entries(testTree).map(([slug, absPath]) => [
+          `${prefix}/${slug}`,
+          absPath,
+        ]),
+      ),
       hrefs: new Set([`/${prefix}/test-leaf`]),
     }),
   ),
