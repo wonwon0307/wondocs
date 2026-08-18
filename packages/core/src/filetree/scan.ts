@@ -24,8 +24,10 @@ export async function scanFileTree(
     const absPath = join(entry.parentPath, entry.name); // filetree 안에서는 디렉토리 depth에 제한이 없다
     const relPath = relative(dirPath, absPath).replaceAll("\\", "/"); // Windows 경로를 Unix 스타일로 변환
 
-    // 숨김 파일/디렉토리는 허용하지 않는다.
-    if (entry.name.startsWith(".")) {
+    // 숨김 파일/디렉토리는 허용하지 않는다. readdir({ recursive: true })는 중첩된 엔트리의
+    // entry.name을 base name으로만 주므로, 상위 디렉토리가 숨김인지 확인하려면
+    // relPath의 각 경로 세그먼트를 검사해야 한다.
+    if (relPath.split("/").some((segment) => segment.startsWith("."))) {
       throw new Error(
         `[WonDocs] Hidden files or directories are not allowed: "${relPath}"`,
       );
