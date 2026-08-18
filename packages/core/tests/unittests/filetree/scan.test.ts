@@ -8,13 +8,14 @@ vi.unmock("@/filetree/scan");
 function createTestDirent(
   name: string,
   parentPath: string,
-  type: "file" | "directory" = "file",
+  type: "file" | "directory" | "symlink" | "socket" = "file",
 ) {
   return {
     name,
     parentPath,
     isFile: () => type === "file",
     isDirectory: () => type === "directory",
+    isSymbolicLink: () => type === "symlink",
   };
 }
 
@@ -129,6 +130,28 @@ describe("scanFileTree", () => {
 
     await expect(scanFileTree(testDir, "")).rejects.toThrow(
       '[WonDocs] Only .md or .mdx files are allowed: "file.txt"',
+    );
+  });
+
+  it("throws an error for symlinks, even if they point to a directory", async () => {
+    // 실제 Node의 readdir({recursive: true})는 디렉토리를 가리키는 symlink도
+    // isDirectory() === false, isSymbolicLink() === true로 보고한다.
+    vi.spyOn(fs, "readdir").mockResolvedValueOnce([
+      createTestDirent("linked-dir", testDir, "symlink"),
+    ] as any);
+
+    await expect(scanFileTree(testDir, "")).rejects.toThrow(
+      '[WonDocs] Symlinks are not allowed: "linked-dir"',
+    );
+  });
+
+  it("throws an error for dirents that are neither a file, directory, nor symlink", async () => {
+    vi.spyOn(fs, "readdir").mockResolvedValueOnce([
+      createTestDirent("some.socket", testDir, "socket"),
+    ] as any);
+
+    await expect(scanFileTree(testDir, "")).rejects.toThrow(
+      '[WonDocs] Unsupported file type: "some.socket"',
     );
   });
 });
