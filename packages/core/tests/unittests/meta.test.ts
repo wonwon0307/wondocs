@@ -59,6 +59,21 @@ describe("scanMeta", () => {
     ]);
   });
 
+  it("should leave hrefs unchanged when neither a custom prefix nor a key is given", async () => {
+    vi.spyOn(fsPromises, "readFile").mockResolvedValue(
+      JSON.stringify({
+        items: [{ type: "link", label: "Root Link", href: "/root-link" }],
+      }),
+    );
+
+    const result = await scanMeta(filePath, "");
+
+    expect(result.prefix).toEqual("");
+    expect(result.items).toEqual([
+      { type: "link", label: "Root Link", href: "/root-link" },
+    ]);
+  });
+
   it("should mark disabled links in the returned links", async () => {
     vi.spyOn(fsPromises, "readFile").mockResolvedValue(
       JSON.stringify({

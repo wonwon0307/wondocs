@@ -48,6 +48,19 @@ describe("computeReport", () => {
 
     expect(report.unlinked).toEqual(["guides/orphan"]);
   });
+
+  it("sorts unlinked hrefs alphabetically", () => {
+    const report = computeReport(
+      [],
+      new Set(["guides/zeta", "guides/alpha", "guides/mid"]),
+    );
+
+    expect(report.unlinked).toEqual([
+      "guides/alpha",
+      "guides/mid",
+      "guides/zeta",
+    ]);
+  });
 });
 
 describe("printReport", () => {
