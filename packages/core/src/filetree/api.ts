@@ -9,7 +9,7 @@ import type { Frontmatter, PagesData } from "./types";
  *
  * @typeParam T - Expected frontmatter shape for this page.
  * @param slug - Page slug (normalized before lookup, so leading/trailing
- * slashes and casing don't matter).
+ * slashes don't matter). Lookups are case-sensitive.
  * @returns The page's `component` loader and `meta` frontmatter.
  * @throws If no page exists for `slug`.
  */
