@@ -47,13 +47,14 @@ export async function scanFileTree(
       );
     }
 
-    // 상대 경로를 slug로 변환하여 트리에 추가
-    tree[relPathToSlug(relPath)] = absPath;
-    hrefs.add(
-      prefix
-        ? `/${prefix}/${relPathToSlug(relPath)}`
-        : `/${relPathToSlug(relPath)}`,
-    );
+    // 상대 경로를 slug로 변환하고, prefix를 접어넣어 트리 키를 만든다.
+    // group마다 relPathToSlug만으로 키를 만들면 서로 다른 group의 같은 상대 경로가
+    // 충돌하므로, prefix를 포함시켜 sidebar href 공간과 1:1 대응하게 한다.
+    const slug = relPathToSlug(relPath);
+    const key = prefix ? `${prefix}/${slug}` : slug;
+
+    tree[key] = absPath;
+    hrefs.add(`/${key}`);
   }
 
   return {
