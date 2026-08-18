@@ -50,7 +50,7 @@ describe("scanFileTree", () => {
 
     const result = await scanFileTree(testDir, "guides");
     expect(result.tree).toEqual({
-      installation: "testDir/installation.md",
+      "guides/installation": "testDir/installation.md",
     });
     expect(result.hrefs).toEqual(new Set(["/guides/installation"]));
   });

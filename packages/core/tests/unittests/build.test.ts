@@ -44,11 +44,16 @@ describe("buildDocs", () => {
       "group2-prefix",
     );
 
-    // 3. build pages
+    // 3. build pages — group1 and group2 resolve to distinct prefixes, so their
+    // trees no longer collide when merged
     expect(buildPages).toHaveBeenCalledWith(
       {
-        "test-group/test-child-leaf": "/path/to/test-group/test-child-leaf.md",
-        "test-leaf": "/path/to/test-leaf.md",
+        "group1-prefix/test-group/test-child-leaf":
+          "/path/to/test-group/test-child-leaf.md",
+        "group1-prefix/test-leaf": "/path/to/test-leaf.md",
+        "group2-prefix/test-group/test-child-leaf":
+          "/path/to/test-group/test-child-leaf.md",
+        "group2-prefix/test-leaf": "/path/to/test-leaf.md",
       },
       "/test-root/.wondocs",
       {},
