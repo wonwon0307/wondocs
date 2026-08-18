@@ -111,8 +111,10 @@ describe("scanFileTree", () => {
   });
 
   it("throws an error for files inside hidden directory", async () => {
+    // readdir({ recursive: true })는 중첩된 엔트리의 name을 base name으로만 주고,
+    // 디렉토리 경로는 parentPath에 담아 반환한다.
     vi.spyOn(fs, "readdir").mockResolvedValueOnce([
-      createTestDirent(".hiddendir/file.md", testDir, "file"),
+      createTestDirent("file.md", `${testDir}/.hiddendir`, "file"),
     ] as any);
 
     await expect(scanFileTree(testDir, "")).rejects.toThrow(
