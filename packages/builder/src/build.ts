@@ -1,5 +1,6 @@
 import { access } from "node:fs/promises";
 import { join } from "node:path";
+import type { DocsFrontmatter } from "@wondocs/core/pages";
 
 import { detectCollections } from "./collection/build";
 import { buildPages } from "./filetree/build";
@@ -10,11 +11,7 @@ import { atomicWrite } from "./utils/files";
 
 import { type CollectionEntry } from "./collection/types";
 import { type ResolvedConfig } from "./config/types";
-import {
-  type FileTree,
-  type Frontmatter,
-  type PagesManifest,
-} from "./filetree/types";
+import { type FileTree, type PagesManifest } from "./filetree/types";
 import { type LinkRef, type SidebarManifest } from "./meta/types";
 
 /**
@@ -84,7 +81,7 @@ export async function buildDocs(config: ResolvedConfig): Promise<void> {
 }
 
 // pagesData의 component는 함수라 JSON.stringify로 직렬화하면 값이 사라진다 — import() 소스를 직접 생성한다
-function buildPagesManifest<T extends Frontmatter>(
+function buildPagesManifest<T extends DocsFrontmatter>(
   pagesData: PagesManifest<T>,
 ): string {
   const entries = Object.entries(pagesData)
