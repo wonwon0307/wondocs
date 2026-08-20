@@ -1,6 +1,5 @@
 import { z } from "zod";
-
-import type { Item } from "./types";
+import type { DocsItem } from "@wondocs/core/sidebar";
 
 const LinkSchema = z.object({
   type: z.literal("link"),
@@ -31,7 +30,7 @@ const SeparatorSchema = z.object({
   icon: z.string().optional(),
 });
 
-export const ItemSchema: z.ZodType<Item> = z.lazy(() =>
+export const ItemSchema: z.ZodType<DocsItem> = z.lazy(() =>
   z.discriminatedUnion("type", [LinkSchema, GroupSchema, SeparatorSchema]),
 );
 
