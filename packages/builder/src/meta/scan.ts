@@ -1,7 +1,8 @@
 import { readFile } from "node:fs/promises";
+import type { DocsItem } from "@wondocs/core/sidebar";
 
 import { MetaFileSchema } from "./schema";
-import type { Item, LinkRef, MetaScanResult } from "./types";
+import type { LinkRef, MetaScanResult } from "./types";
 
 // meta.json에서 schema validation에 실패한 경우, 에러 메시지에 표시할 item의 경로를 변환하는 함수
 function formatPath(path: PropertyKey[]): string {
@@ -51,7 +52,7 @@ export async function scanMeta(
   const prefix = result.data.prefix ?? key;
 
   // item 1개 처리하는 함수: external flag가 있으면, 그대로 반환하고, 그렇지 않으면 prefix를 붙인다
-  const processItem = (item: Item) => {
+  const processItem = (item: DocsItem) => {
     if (item.type === "link") {
       if (!item.external) {
         item.href = prefix ? `/${prefix}${item.href}` : item.href;

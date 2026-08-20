@@ -1,13 +1,13 @@
 import { readFile } from "node:fs/promises";
 import { compile } from "@mdx-js/mdx";
 import matter from "gray-matter";
+import type { DocsFrontmatter } from "@wondocs/core/pages";
 
 import type { MdxOptions } from "@/config/types";
-import type { Frontmatter } from "@/filetree/types";
 
 interface CompileResult {
   js: string;
-  frontmatter: Frontmatter;
+  frontmatter: DocsFrontmatter;
 }
 
 export async function compileMdx(
@@ -31,6 +31,6 @@ export async function compileMdx(
 
   return {
     js: String(compiled),
-    frontmatter: data as Frontmatter,
+    frontmatter: data as DocsFrontmatter,
   };
 }

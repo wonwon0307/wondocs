@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 
-import { loadConfig } from "@/config";
+import { loadConfig } from "@/config/loader";
 
 describe("loadConfig", () => {
   it("should load default config when no config is provided", () => {
