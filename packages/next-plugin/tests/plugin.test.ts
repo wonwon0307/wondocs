@@ -12,13 +12,9 @@ const watchMock = vi.hoisted(() =>
   vi.fn().mockResolvedValue({ close: () => {} }),
 );
 
-vi.mock("@wondocs/core/config", () => ({
+vi.mock("@wondocs/builder", () => ({
   loadConfig: loadConfigMock,
-}));
-vi.mock("@wondocs/core/build", () => ({
   buildDocs: buildMock,
-}));
-vi.mock("@wondocs/core/watch", () => ({
   watchDocs: watchMock,
 }));
 
