@@ -1,6 +1,6 @@
 import * as sidebar from "#wondocs/sidebar";
 
-import { getSidebar } from "@/meta/api";
+import { getSidebar } from "@/sidebar/api";
 
 describe("getSidebar", () => {
   beforeEach(() => {

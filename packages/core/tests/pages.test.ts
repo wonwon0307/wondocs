@@ -1,6 +1,6 @@
 import * as pages from "#wondocs/pages";
 
-import { getPage } from "@/filetree/api";
+import { getPage } from "@/pages/api";
 
 describe("getPage", () => {
   const mockPage = {
