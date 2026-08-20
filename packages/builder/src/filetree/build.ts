@@ -1,11 +1,12 @@
 import { join } from "node:path";
+import type { DocsFrontmatter } from "@wondocs/core/pages";
 
 import type { MdxOptions } from "@/config/types";
 import { atomicWrite } from "@/utils/files";
 import { compileMdx } from "@/utils/mdx";
-import type { FileTree, Frontmatter, PagesManifest } from "./types";
+import type { FileTree, PagesManifest } from "./types";
 
-export async function buildPages<T extends Frontmatter>(
+export async function buildPages<T extends DocsFrontmatter>(
   filetree: FileTree,
   outDir: string,
   mdxOptions: MdxOptions = {},

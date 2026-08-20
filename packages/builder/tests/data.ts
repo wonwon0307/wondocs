@@ -1,7 +1,9 @@
-import { type FileTree } from "@/filetree/types";
-import { type Item, type LinkRef } from "@/meta/types";
+import { type DocsItem } from "@wondocs/core/sidebar";
 
-export const testItems: Item[] = [
+import { type FileTree } from "@/filetree/types";
+import { type LinkRef } from "@/meta/types";
+
+export const testItems: DocsItem[] = [
   {
     type: "link",
     label: "Test Link",
@@ -47,7 +49,7 @@ export const testItems: Item[] = [
   },
 ];
 
-export const expectedReturnItems: Item[] = [
+export const expectedReturnItems: DocsItem[] = [
   {
     type: "link",
     label: "Test Link",

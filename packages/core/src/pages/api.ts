@@ -1,7 +1,6 @@
 import pages from "#wondocs/pages";
 
-import { normalizeSlug } from "@/utils/slug";
-import type { Frontmatter, PagesData } from "./types";
+import type { DocsFrontmatter, DocsPageData } from "./types";
 
 /**
  * Looks up a page's lazy component loader and frontmatter from the generated
@@ -13,8 +12,11 @@ import type { Frontmatter, PagesData } from "./types";
  * @returns The page's `component` loader and `meta` frontmatter.
  * @throws If no page exists for `slug`.
  */
-export function getPage<T extends Frontmatter>(slug: string): PagesData<T> {
-  const key = normalizeSlug(slug);
+export function getPage<T extends DocsFrontmatter>(
+  slug: string,
+): DocsPageData<T> {
+  // Normalize the slug to a key by removing leading/trailing slashes and collapsing multiple slashes into one
+  const key = slug.split("/").filter(Boolean).join("/");
 
   const page = pages[key];
 
@@ -22,5 +24,5 @@ export function getPage<T extends Frontmatter>(slug: string): PagesData<T> {
     throw new Error(`[WonDocs] No page found for slug "${slug}".`);
   }
 
-  return page as PagesData<T>;
+  return page as DocsPageData<T>;
 }

@@ -5,9 +5,12 @@ import {
   PHASE_PRODUCTION_BUILD,
 } from "next/constants";
 
-import { loadConfig, type WonDocsConfig } from "@wondocs/core/config";
-import { buildDocs } from "@wondocs/core/build";
-import { watchDocs } from "@wondocs/core/watch";
+import {
+  buildDocs,
+  watchDocs,
+  loadConfig,
+  type WonDocsConfig,
+} from "@wondocs/builder";
 
 const outDir = join(process.cwd(), ".wondocs");
 

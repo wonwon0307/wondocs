@@ -3,8 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "#wondocs/pages": ["./src/wondocs-pages"],
-      "#wondocs/sidebar": ["./src/wondocs-sidebar"]
+      "#wondocs/pages": ["./src/pages/manifest.ts"],
+      "#wondocs/sidebar": ["./src/sidebar/manifest.ts"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"]

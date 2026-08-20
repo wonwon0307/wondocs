@@ -1,7 +1,3 @@
-export function normalizeSlug(slug: string): string {
-  return slug.replace(/^\/+|\/+$/g, "");
-}
-
 export function relPathToSlug(relPath: string): string {
   // "/"로 상대 경로를 분리하고
   const parts = relPath.replace(/\\/g, "/").split("/");

@@ -27,25 +27,13 @@
     "registry": "https://registry.npmjs.org/"
   },
   "exports": {
-    "./config": {
-      "types": "./dist/config/index.d.mts",
-      "default": "./dist/config/index.mjs"
-    },
-    "./build": {
-      "types": "./dist/build.d.mts",
-      "default": "./dist/build.mjs"
-    },
-    "./watch": {
-      "types": "./dist/watch.d.mts",
-      "default": "./dist/watch.mjs"
+    "./pages": {
+      "types": "./dist/pages/index.d.mts",
+      "default": "./dist/pages/index.mjs"
     },
     "./sidebar": {
-      "types": "./dist/sidebar.d.mts",
-      "default": "./dist/sidebar.mjs"
-    },
-    "./page": {
-      "types": "./dist/page.d.mts",
-      "default": "./dist/page.mjs"
+      "types": "./dist/sidebar/index.d.mts",
+      "default": "./dist/sidebar/index.mjs"
     }
   },
   "scripts": {
