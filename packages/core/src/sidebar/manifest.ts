@@ -1,4 +1,4 @@
-import type { SidebarManifest } from "@/meta/types";
+import type { DocsItem } from "./types";
 
-const manifest: SidebarManifest = {};
+const manifest: Record<string, DocsItem[]> = {};
 export default manifest;
