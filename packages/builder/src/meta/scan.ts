@@ -55,19 +55,19 @@ export async function scanMeta(
   const processItem = (item: DocsItem) => {
     if (item.type === "link") {
       if (!item.external) {
-        item.href = prefix ? `/${prefix}${item.href}` : item.href;
+        item.url = prefix ? `/${prefix}${item.url}` : item.url;
       }
 
       // 같은 href가 두 번 이상 등장하면 에러를 던진다
-      if (seenHrefs.has(item.href)) {
+      if (seenHrefs.has(item.url)) {
         throw new Error(
-          `[WonDocs] Duplicate href "${item.href}" in meta.json at "${filePath}"`,
+          `[WonDocs] Duplicate href "${item.url}" in meta.json at "${filePath}"`,
         );
       }
-      seenHrefs.add(item.href);
+      seenHrefs.add(item.url);
 
       links.push({
-        href: item.href,
+        href: item.url,
         external: item.external ?? false,
         disabled: item.disabled ?? false,
       });
