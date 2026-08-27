@@ -1,6 +1,6 @@
 export interface DocsLink {
   type: "link";
-  href: string;
+  url: string;
   label?: string;
   icon?: string;
   badge?: string;
