@@ -99,7 +99,7 @@ describe("buildDocs", () => {
     vi.mocked(scanMeta).mockImplementation(() =>
       Promise.resolve({
         prefix: "same-prefix",
-        items: [{ type: "link", href: "/test-leaf", label: "Test Leaf" }],
+        items: [{ type: "link", url: "/test-leaf", label: "Test Leaf" }],
         links: [
           {
             href: "/same-prefix/test-leaf",

@@ -7,12 +7,12 @@ export const testItems: DocsItem[] = [
   {
     type: "link",
     label: "Test Link",
-    href: "/test-link",
+    url: "/test-link",
     items: [
       {
         type: "link",
         label: "Test Sub Link",
-        href: "/test-sub-link",
+        url: "/test-sub-link",
       },
     ],
   },
@@ -23,7 +23,7 @@ export const testItems: DocsItem[] = [
       {
         type: "link",
         label: "Test Child Link",
-        href: "/test-child-link",
+        url: "/test-child-link",
       },
     ],
   },
@@ -33,7 +33,7 @@ export const testItems: DocsItem[] = [
   {
     type: "link",
     label: "Test External Link",
-    href: "https://example.com",
+    url: "https://example.com",
     external: true,
   },
   {
@@ -43,7 +43,7 @@ export const testItems: DocsItem[] = [
       {
         type: "link",
         label: "Test Child Link 2",
-        href: "/test-child-link-2",
+        url: "/test-child-link-2",
       },
     ],
   },
@@ -53,12 +53,12 @@ export const expectedReturnItems: DocsItem[] = [
   {
     type: "link",
     label: "Test Link",
-    href: "/test-collection/test-link",
+    url: "/test-collection/test-link",
     items: [
       {
         type: "link",
         label: "Test Sub Link",
-        href: "/test-collection/test-sub-link",
+        url: "/test-collection/test-sub-link",
       },
     ],
   },
@@ -69,7 +69,7 @@ export const expectedReturnItems: DocsItem[] = [
       {
         type: "link",
         label: "Test Child Link",
-        href: "/test-collection/test-child-link",
+        url: "/test-collection/test-child-link",
       },
     ],
   },
@@ -79,7 +79,7 @@ export const expectedReturnItems: DocsItem[] = [
   {
     type: "link",
     label: "Test External Link",
-    href: "https://example.com",
+    url: "https://example.com",
     external: true,
   },
   {
@@ -89,7 +89,7 @@ export const expectedReturnItems: DocsItem[] = [
       {
         type: "link",
         label: "Test Child Link 2",
-        href: "/test-collection/test-child-link-2",
+        url: "/test-collection/test-child-link-2",
       },
     ],
   },

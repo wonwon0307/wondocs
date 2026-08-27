@@ -3,7 +3,7 @@ import type { DocsItem } from "@wondocs/core/sidebar";
 
 const LinkSchema = z.object({
   type: z.literal("link"),
-  href: z.string().min(1, "A Link must have a non-empty href"),
+  url: z.string().min(1, "A Link must have a non-empty href"),
   label: z.string().optional(),
   icon: z.string().optional(),
   badge: z.string().optional(),

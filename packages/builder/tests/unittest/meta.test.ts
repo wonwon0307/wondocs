@@ -31,7 +31,7 @@ describe("scanMeta", () => {
           {
             type: "link",
             label: "Test Link",
-            href: "/test-link",
+            url: "/test-link",
           },
         ],
       }),
@@ -45,7 +45,7 @@ describe("scanMeta", () => {
       {
         type: "link",
         label: "Test Link",
-        href: `/${customPrefix}/test-link`,
+        url: `/${customPrefix}/test-link`,
       },
     ]);
     expect(result.links).toEqual([
@@ -60,7 +60,7 @@ describe("scanMeta", () => {
   it("should leave hrefs unchanged when neither a custom prefix nor a key is given", async () => {
     vi.spyOn(fsPromises, "readFile").mockResolvedValue(
       JSON.stringify({
-        items: [{ type: "link", label: "Root Link", href: "/root-link" }],
+        items: [{ type: "link", label: "Root Link", url: "/root-link" }],
       }),
     );
 
@@ -68,7 +68,7 @@ describe("scanMeta", () => {
 
     expect(result.prefix).toEqual("");
     expect(result.items).toEqual([
-      { type: "link", label: "Root Link", href: "/root-link" },
+      { type: "link", label: "Root Link", url: "/root-link" },
     ]);
   });
 
@@ -79,7 +79,7 @@ describe("scanMeta", () => {
           {
             type: "link",
             label: "Coming Soon",
-            href: "/coming-soon",
+            url: "/coming-soon",
             disabled: true,
           },
         ],
@@ -101,11 +101,11 @@ describe("scanMeta", () => {
     vi.spyOn(fsPromises, "readFile").mockResolvedValue(
       JSON.stringify({
         items: [
-          { type: "link", href: "/duplicate" },
+          { type: "link", url: "/duplicate" },
           {
             type: "group",
             label: "Nested",
-            items: [{ type: "link", href: "/duplicate" }],
+            items: [{ type: "link", url: "/duplicate" }],
           },
         ],
       }),
