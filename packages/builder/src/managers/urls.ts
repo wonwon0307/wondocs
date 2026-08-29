@@ -1,12 +1,12 @@
 export class UrlManager {
-  private metaUrls: Set<string>;
-  private pagesUrls: Set<string>;
-  private brokenUrls: Set<string>; // meta.json에만 있는 url들
-  private unlinkedUrls: Set<string>; // pages에서 나온 url 중 meta.json에 없는 url
+  private readonly metaUrls: Set<string>;
+  private readonly pagesUrls: Set<string>;
+  private readonly brokenUrls: Set<string>; // meta.json에만 있는 url들
+  private readonly unlinkedUrls: Set<string>; // pages에서 나온 url 중 meta.json에 없는 url
 
   // duplicates
-  private metaDuplicates: Set<string>;
-  private pagesDuplicates: Set<string>;
+  private readonly metaDuplicates: Set<string>;
+  private readonly pagesDuplicates: Set<string>;
 
   // stats
   private numLinked: number;

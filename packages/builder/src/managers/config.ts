@@ -3,11 +3,10 @@ import { join, relative, resolve } from "node:path";
 import type { ResolvedConfig, WonDocsConfig } from "./types";
 
 export class ConfigManager {
-  protected config: ResolvedConfig | null;
-  private cwd: string;
+  protected config: ResolvedConfig | null = null;
+  private readonly cwd: string;
 
   constructor() {
-    this.config = null;
     this.cwd = process.cwd();
   }
 
