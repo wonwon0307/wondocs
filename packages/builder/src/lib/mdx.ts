@@ -3,7 +3,7 @@ import { compile } from "@mdx-js/mdx";
 import matter from "gray-matter";
 import type { DocsFrontmatter } from "@wondocs/core/pages";
 
-import type { MdxOptions } from "@/config/types";
+import type { MdxOptions } from "@/managers/types";
 
 interface CompileResult {
   js: string;
