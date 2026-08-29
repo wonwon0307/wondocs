@@ -1,12 +1,15 @@
-import * as sidebar from "#wondocs/sidebar";
+import * as manifest from "#wondocs/manifest";
 
 import { getSidebar } from "@/sidebar/api";
 
 describe("getSidebar", () => {
   beforeEach(() => {
-    vi.spyOn(sidebar, "default", "get").mockReturnValue({
-      group1: [],
-      group2: [],
+    vi.spyOn(manifest, "default", "get").mockReturnValue({
+      pages: {},
+      sidebar: {
+        group1: [],
+        group2: [],
+      },
     });
   });
 
@@ -16,8 +19,11 @@ describe("getSidebar", () => {
   });
 
   it("should return the single group if no parameter is provided", () => {
-    vi.spyOn(sidebar, "default", "get").mockReturnValueOnce({
-      "": [],
+    vi.spyOn(manifest, "default", "get").mockReturnValueOnce({
+      pages: {},
+      sidebar: {
+        "": [],
+      },
     });
 
     const group = getSidebar();
