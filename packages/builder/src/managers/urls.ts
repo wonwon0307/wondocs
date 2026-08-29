@@ -83,7 +83,7 @@ export class UrlManager {
 
   public report(): void {
     console.log(
-      `[WonDocs] Build report: Successfully linked ${this.numLinked} URLs` +
+      `[WonDocs] Build report: Successfully linked ${this.numLinked} URLs ` +
         `out of ${this.metaUrls.size} in the sidebar.`,
     );
 
