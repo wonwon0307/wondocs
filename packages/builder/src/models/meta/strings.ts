@@ -10,25 +10,24 @@ export function resolveShorthandString(inlineStr: string): DocsItem {
   return parseLinkString(trimmedStr);
 }
 
-// "---" 단독, 또는 "---Label---" / "---[Icon]---" / "---[Icon]Label---" 형식
-const SEPARATOR_PATTERN = /^---$|^---(?:\[([^[\]]+)\](.+)?|(.+))---$/;
+// "---" 단독, 또는 "---Label---" 형식
+const SEPARATOR_PATTERN = /^---$|^---(.+)---$/;
 
 function parseSeparatorStr(str: string): DocsSeparator {
   const match = str.match(SEPARATOR_PATTERN);
 
   if (!match) {
     throw new Error(
-      `[WonDocs] Invalid separator shorthand "${str}": expected "---", ` +
-        `"---Label---", or "---[Icon]Label---".`,
+      `[WonDocs] Invalid separator shorthand "${str}": expected "---" or ` +
+        `"---Label---".`,
     );
   }
 
-  const [, icon, labelAfterIcon, labelOnly] = match;
-  const label = (labelAfterIcon ?? labelOnly)?.trim() || undefined;
+  const [, labelOnly] = match;
+  const label = labelOnly?.trim() || undefined;
 
   return {
     type: "separator",
-    ...(icon && { icon: icon.trim() }),
     ...(label && { label }),
   };
 }
