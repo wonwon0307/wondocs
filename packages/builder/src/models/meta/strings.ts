@@ -14,7 +14,7 @@ export function resolveShorthandString(inlineStr: string): DocsItem {
 const SEPARATOR_PATTERN = /^---$|^---(.+)---$/;
 
 function parseSeparatorStr(str: string): DocsSeparator {
-  const match = str.match(SEPARATOR_PATTERN);
+  const match = new RegExp(SEPARATOR_PATTERN).exec(str);
 
   if (!match) {
     throw new Error(`Invalid shorthand string: "${str}".`);
@@ -38,7 +38,7 @@ function parseLinkString(str: string): DocsLink {
   const disabled = str.startsWith("!");
   const rest = disabled ? str.slice(1) : str;
 
-  const match = rest.match(LINK_PATTERN);
+  const match = new RegExp(LINK_PATTERN).exec(rest);
 
   if (!match) {
     throw new Error(`Invalid shorthand string: "${str}".`);
