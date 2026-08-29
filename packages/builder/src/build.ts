@@ -7,7 +7,8 @@ export async function buildDocs(config: WonDocsConfig): Promise<void> {
   try {
     builderContext.config.setConfig(config);
 
-    const { contentsDir, outDir } = builderContext.config.getConfig();
+    const { contentsDir, outDir, allowUnlinkedPages } =
+      builderContext.config.getConfig();
 
     const collections: Collection[] = Array.isArray(contentsDir)
       ? contentsDir.map((dir) => new Collection(dir))
@@ -17,7 +18,7 @@ export async function buildDocs(config: WonDocsConfig): Promise<void> {
     builderContext.urls.reset();
     await Promise.all(collections.map((collection) => collection.scan()));
 
-    builderContext.urls.validate();
+    builderContext.urls.validate(allowUnlinkedPages);
 
     await prepareOutDir(outDir);
 

@@ -1,5 +1,3 @@
-import { builderContext } from "@/context";
-
 export class UrlManager {
   private metaUrls: Set<string>;
   private pagesUrls: Set<string>;
@@ -59,15 +57,13 @@ export class UrlManager {
     }
   }
 
-  public validate(): void {
+  public validate(allowUnlinkedPages: boolean): void {
     if (this.brokenUrls.size > 0) {
       throw new Error(
         `Broken Links detected: ${this.brokenUrls.size} URLs in meta.json do not have corresponding pages. ` +
           Array.from(this.brokenUrls),
       );
     }
-
-    const { allowUnlinkedPages } = builderContext.config.getConfig();
 
     if (this.unlinkedUrls.size > 0 && !allowUnlinkedPages) {
       throw new Error(

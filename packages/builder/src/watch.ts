@@ -1,3 +1,4 @@
+import { extname } from "node:path";
 import { watch } from "chokidar";
 
 import { builderContext } from "./context";
@@ -11,7 +12,6 @@ import type { WonDocsConfig } from "./managers/types";
 import { Collection } from "./models/collection";
 import { createSampleMetaJson } from "./models/meta/sample";
 import { createSampleMdx } from "./models/pages/sample";
-import { extname } from "node:path";
 
 const DEBOUNCE_MS = 100;
 // 2. Debounce 타이머 초기화
@@ -42,7 +42,8 @@ export async function watchDocs(config: WonDocsConfig): Promise<WatchHandle> {
 }
 
 async function build(): Promise<void> {
-  const { contentsDir, outDir } = builderContext.config.getConfig();
+  const { contentsDir, outDir, allowUnlinkedPages } =
+    builderContext.config.getConfig();
 
   const collections: Collection[] = Array.isArray(contentsDir)
     ? await Promise.all(contentsDir.map((dir) => resolveCollectionDir(dir)))
@@ -52,7 +53,7 @@ async function build(): Promise<void> {
   builderContext.urls.reset();
   await Promise.all(collections.map((collection) => collection.scan()));
 
-  builderContext.urls.validate();
+  builderContext.urls.validate(allowUnlinkedPages);
 
   await prepareOutDir(outDir);
 
