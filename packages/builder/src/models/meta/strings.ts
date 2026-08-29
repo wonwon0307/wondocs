@@ -17,10 +17,7 @@ function parseSeparatorStr(str: string): DocsSeparator {
   const match = str.match(SEPARATOR_PATTERN);
 
   if (!match) {
-    throw new Error(
-      `[WonDocs] Invalid separator shorthand "${str}": expected "---" or ` +
-        `"---Label---".`,
-    );
+    throw new Error(`Invalid shorthand string: "${str}".`);
   }
 
   const [, labelOnly] = match;
@@ -44,10 +41,7 @@ function parseLinkString(str: string): DocsLink {
   const match = rest.match(LINK_PATTERN);
 
   if (!match) {
-    throw new Error(
-      `Invalid link shorthand "${str}": expected "[Label](url)" or ` +
-        `"[IconName][Label](url)", optionally prefixed with "!" for disabled.`,
-    );
+    throw new Error(`Invalid shorthand string: "${str}".`);
   }
 
   const [, first, second, url] = match;
