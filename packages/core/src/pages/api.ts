@@ -1,4 +1,4 @@
-import pages from "#wondocs/pages";
+import manifest from "#wondocs/manifest";
 
 import type { DocsFrontmatter, DocsPageData } from "./types";
 
@@ -18,7 +18,7 @@ export function getPage<T extends DocsFrontmatter>(
   // Normalize the slug to a key by removing leading/trailing slashes and collapsing multiple slashes into one
   const key = slug.split("/").filter(Boolean).join("/");
 
-  const page = pages[key];
+  const page = manifest.pages[key];
 
   if (!page) {
     throw new Error(`[WonDocs] No page found for slug "${slug}".`);

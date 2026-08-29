@@ -1,4 +1,4 @@
-import * as pages from "#wondocs/pages";
+import * as manifest from "#wondocs/manifest";
 
 import { getPage } from "@/pages/api";
 
@@ -9,8 +9,11 @@ describe("getPage", () => {
   };
 
   beforeEach(() => {
-    vi.spyOn(pages, "default", "get").mockReturnValue({
-      "test-page": mockPage,
+    vi.spyOn(manifest, "default", "get").mockReturnValue({
+      pages: {
+        "test-page": mockPage,
+      },
+      sidebar: {},
     });
   });
 

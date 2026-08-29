@@ -1,4 +1,4 @@
-import manifest from "#wondocs/sidebar";
+import manifest from "#wondocs/manifest";
 
 import type { DocsItem } from "./types";
 
@@ -12,21 +12,21 @@ import type { DocsItem } from "./types";
  */
 export function getSidebar(key?: string): DocsItem[] {
   if (key !== undefined) {
-    const group = manifest[key];
+    const group = manifest.sidebar[key];
     if (!group) {
       throw new Error(
         `[WonDocs] No group found for key "${key}". ` +
-          `Available groups: ${Object.keys(manifest).join(", ")}`,
+          `Available groups: ${Object.keys(manifest.sidebar).join(", ")}`,
       );
     }
     return group;
   }
 
-  const group = manifest[""];
+  const group = manifest.sidebar[""];
   if (!group) {
     throw new Error(
       `[WonDocs] No single group found. ` +
-        `Available groups: ${Object.keys(manifest).join(", ")}`,
+        `Available groups: ${Object.keys(manifest.sidebar).join(", ")}`,
     );
   }
   return group;

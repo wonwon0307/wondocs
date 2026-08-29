@@ -8,7 +8,7 @@ export default defineConfig([
     clean: false,
     deps: {
       onlyBundle: false,
-      neverBundle: ["#wondocs/sidebar", "#wondocs/pages"],
+      neverBundle: ["#wondocs/manifest"],
     },
   },
 ]);

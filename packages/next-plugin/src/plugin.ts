@@ -5,12 +5,7 @@ import {
   PHASE_PRODUCTION_BUILD,
 } from "next/constants";
 
-import {
-  buildDocs,
-  watchDocs,
-  loadConfig,
-  type WonDocsConfig,
-} from "@wondocs/builder";
+import { buildDocs, watchDocs, type WonDocsConfig } from "@wondocs/builder";
 
 const outDir = join(process.cwd(), ".wondocs");
 
@@ -51,19 +46,11 @@ export function createWonDocs(wonDocsConfig: WonDocsConfig = {}) {
     // Returns an async function because Turbopack has no plugin API to hook into
     // individual compilations — scanning runs once when next.config is evaluated.
     return async function (phase: string): Promise<NextConfig> {
-      const resolvedConfig = loadConfig(wonDocsConfig);
-      const shouldWatch =
-        phase === PHASE_DEVELOPMENT_SERVER || process.argv.includes("--watch");
-      const shouldBuild = phase === PHASE_PRODUCTION_BUILD;
-
-      // next.config is also evaluated on `next start` (PHASE_PRODUCTION_SERVER) and other
-      // non-build phases — skip there so we don't re-scan/recompile docs (and re-write
-      // .wondocs/) on every server boot, which can also fail on read-only production filesystems.
-      if (shouldWatch) {
+      if (phase === PHASE_DEVELOPMENT_SERVER) {
         if (watchHandle) watchHandle.close();
-        watchHandle = await watchDocs(resolvedConfig);
-      } else if (shouldBuild) {
-        await buildDocs(resolvedConfig);
+        watchHandle = await watchDocs(wonDocsConfig);
+      } else if (phase === PHASE_PRODUCTION_BUILD) {
+        await buildDocs(wonDocsConfig);
       }
 
       return {
@@ -72,8 +59,7 @@ export function createWonDocs(wonDocsConfig: WonDocsConfig = {}) {
           ...nextConfig.turbopack,
           resolveAlias: {
             ...nextConfig.turbopack?.resolveAlias,
-            "#wondocs/sidebar": toProjectRelative(join(outDir, "sidebar.js")),
-            "#wondocs/pages": toProjectRelative(join(outDir, "pages.js")),
+            "#wondocs/manifest": toProjectRelative(join(outDir, "manifest.js")),
           },
         },
       };

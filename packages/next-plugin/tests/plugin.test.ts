@@ -6,14 +6,12 @@ import {
 
 import { createWonDocs } from "@/plugin";
 
-const loadConfigMock = vi.hoisted(() => vi.fn().mockReturnValue({}));
 const buildMock = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
 const watchMock = vi.hoisted(() =>
   vi.fn().mockResolvedValue({ close: () => {} }),
 );
 
 vi.mock("@wondocs/builder", () => ({
-  loadConfig: loadConfigMock,
   buildDocs: buildMock,
   watchDocs: watchMock,
 }));
@@ -31,10 +29,9 @@ describe("createWonDocs", () => {
     expect(nextConfig).toHaveProperty("turbopack");
     expect(nextConfig.turbopack).toHaveProperty("resolveAlias");
     expect(nextConfig.turbopack?.resolveAlias).toHaveProperty(
-      "#wondocs/sidebar",
+      "#wondocs/manifest",
     );
 
-    expect(loadConfigMock).toHaveBeenCalled();
     expect(buildMock).toHaveBeenCalled();
   });
 
@@ -47,7 +44,7 @@ describe("createWonDocs", () => {
     expect(nextConfig).toHaveProperty("turbopack");
     expect(nextConfig.turbopack).toHaveProperty("resolveAlias");
     expect(nextConfig.turbopack?.resolveAlias).toHaveProperty(
-      "#wondocs/sidebar",
+      "#wondocs/manifest",
     );
 
     // but re-scanning/recompiling docs on every server boot must not happen
@@ -63,10 +60,9 @@ describe("createWonDocs", () => {
     expect(nextConfig).toHaveProperty("turbopack");
     expect(nextConfig.turbopack).toHaveProperty("resolveAlias");
     expect(nextConfig.turbopack?.resolveAlias).toHaveProperty(
-      "#wondocs/sidebar",
+      "#wondocs/manifest",
     );
 
-    expect(loadConfigMock).toHaveBeenCalled();
     expect(watchMock).toHaveBeenCalled();
   });
 
