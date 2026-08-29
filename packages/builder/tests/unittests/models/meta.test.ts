@@ -156,7 +156,7 @@ describe("Meta", () => {
       );
     });
 
-    it("should throw an error if invalid sidebar item is provided", async () => {
+    it("should throw an error if meta.json shape is invalid", async () => {
       vi.spyOn(files, "parseJsonFile").mockResolvedValueOnce([]);
 
       const meta = new Meta("/path/to/collection");
