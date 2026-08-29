@@ -13,6 +13,8 @@ export async function buildDocs(config: WonDocsConfig): Promise<void> {
       ? contentsDir.map((dir) => new Collection(dir))
       : [new Collection(contentsDir)];
 
+    builderContext.manifest.reset();
+    builderContext.urls.reset();
     await Promise.all(collections.map((collection) => collection.scan()));
 
     builderContext.urls.validate();
