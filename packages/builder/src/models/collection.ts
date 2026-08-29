@@ -6,8 +6,8 @@ import { Meta } from "./meta/models";
 import { Pages } from "./pages/models";
 
 export class Collection {
-  private meta: Meta;
-  private pages: Pages;
+  private readonly meta: Meta;
+  private readonly pages: Pages;
 
   constructor(dir: string) {
     // 검증 먼저 수행하고
