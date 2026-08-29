@@ -3,7 +3,7 @@ import { basename, join } from "node:path";
 
 import { builderContext } from "@/context";
 import { MissingMetaJsonError } from "@/lib/errors";
-import { formatPath, parseJsonFile } from "@/lib/files";
+import { parseJsonFile } from "@/lib/files";
 import { processSidebarItem } from "./process";
 import { MetaFileSchema } from "./schema";
 import { type DocsItemInput } from "./types";
@@ -35,7 +35,7 @@ export class Meta {
 
     if (!parsed.success) {
       const issues = parsed.error.issues
-        .map((issue) => `  ${formatPath(issue.path)}: ${issue.message}`)
+        .map((issue) => `  ${this.formatPath(issue.path)}: ${issue.message}`)
         .join("\n");
       throw new Error(`Invalid meta.json at "${this.path}":\n${issues}`);
     }
@@ -57,5 +57,12 @@ export class Meta {
       // root item은 manifest에 등록한다
       builderContext.manifest.addSidebarItem(this.key, processedItem);
     }
+  }
+
+  private formatPath(path: PropertyKey[]): string {
+    if (path.length === 0) return "(root)";
+
+    const [first, ...rest] = path;
+    return String(first) + rest.map((p) => `[${String(p)}]`).join("");
   }
 }

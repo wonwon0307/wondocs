@@ -27,17 +27,3 @@ export async function parseJsonFile(filePath: string): Promise<unknown> {
     throw new Error(`Failed to parse JSON file at "${filePath}": ${e}`);
   }
 }
-
-export function formatPath(path: PropertyKey[]): string {
-  if (path.length === 0) return "(root)";
-
-  const formatString = (p: PropertyKey, i: number) => {
-    if (i === 0) return String(p);
-
-    return `.${String(p)}`;
-  };
-
-  return path
-    .map((p, i) => (typeof p === "number" ? `[${p}]` : formatString(p, i)))
-    .join("");
-}
