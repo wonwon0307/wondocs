@@ -13,6 +13,12 @@ describe("Pages", () => {
   } as ResolvedConfig);
   vi.spyOn(fs, "readdirSync").mockReturnValue([
     {
+      name: "index.mdx",
+      isFile: () => true,
+      isDirectory: () => false,
+      parentPath: "/path/to/collection/pages",
+    },
+    {
       name: "test-page.mdx",
       isFile: () => true,
       isDirectory: () => false,
@@ -49,7 +55,10 @@ describe("Pages", () => {
 
     await pages.compilePages();
 
-    expect(files.atomicWrite).toHaveBeenCalledTimes(3);
+    expect(files.atomicWrite).toHaveBeenCalledTimes(4);
+    expect(builderContext.urls.inspectPagesUrl).toHaveBeenCalledWith(
+      "/collection",
+    );
     expect(builderContext.urls.inspectPagesUrl).toHaveBeenCalledWith(
       "/collection/test-page",
     );
@@ -68,7 +77,8 @@ describe("Pages", () => {
 
     await pages.compilePages();
 
-    expect(files.atomicWrite).toHaveBeenCalledTimes(3);
+    expect(files.atomicWrite).toHaveBeenCalledTimes(4);
+    expect(builderContext.urls.inspectPagesUrl).toHaveBeenCalledWith("/");
     expect(builderContext.urls.inspectPagesUrl).toHaveBeenCalledWith(
       "/test-page",
     );
