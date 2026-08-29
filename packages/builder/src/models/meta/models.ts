@@ -9,7 +9,7 @@ import { MetaFileSchema } from "./schema";
 import { type DocsItemInput } from "./types";
 
 export class Meta {
-  private path: string;
+  private readonly path: string;
   private sidebarInput: DocsItemInput[];
   public baseUrl: string;
   public key: string;
