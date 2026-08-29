@@ -28,6 +28,8 @@ export async function buildDocs(config: WonDocsConfig): Promise<void> {
 
     await builderContext.manifest.writeManifest(outDir);
     builderContext.urls.report();
+
+    console.log("[WonDocs] Build completed successfully!");
   } catch (error) {
     console.error("[WonDocs] Error during build:", error);
     throw error;
