@@ -31,7 +31,10 @@ export function processSidebarItem(
       const normalizedUrl = normalizeUrl(rawItem.url);
       const url = baseUrl ? `/${baseUrl}${normalizedUrl}` : normalizedUrl;
       rawItem.url = normalizeUrl(url);
-      builderContext.urls.addMetaUrl(rawItem.url);
+
+      if (rawItem.disabled !== true) {
+        builderContext.urls.addMetaUrl(rawItem.url);
+      }
     }
 
     const item: DocsItem = {
