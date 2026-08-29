@@ -1,92 +1,58 @@
-import { testItems, testTree } from "./data";
-
 vi.mock("node:fs", () => ({
   existsSync: vi.fn().mockReturnValue(true),
-  mkdirSync: vi.fn(),
   readdirSync: vi.fn().mockReturnValue([
-    { name: "group1", isDirectory: () => true, isFile: () => false },
-    { name: "group2", isDirectory: () => true, isFile: () => false },
+    { name: "meta.json", isFile: () => true, isDirectory: () => false },
+    { name: "pages", isFile: () => false, isDirectory: () => true },
   ]),
 }));
 vi.mock("node:fs/promises", () => ({
-  access: vi.fn().mockResolvedValue(undefined),
+  access: vi.fn(),
   mkdir: vi.fn(),
+  readFile: vi.fn(),
   rename: vi.fn(),
   rm: vi.fn(),
   writeFile: vi.fn(),
-  readdir: vi.fn().mockResolvedValue([]),
-  readFile: vi.fn().mockImplementation((path: string) => {
-    if (path.endsWith("meta.json")) {
-      return Promise.resolve(
-        JSON.stringify({ prefix: "test-prefix", items: testItems }),
-      );
-    }
-    return Promise.resolve("{}");
-  }),
-}));
-vi.mock("@mdx-js/mdx", () => ({
-  compile: vi.fn().mockResolvedValue("export default function MDXContent() {}"),
-}));
-vi.mock("gray-matter", () => ({
-  default: vi.fn().mockImplementation((raw: string) => ({
-    data: { title: "Test Title" },
-    content: raw,
-  })),
 }));
 vi.mock("chokidar", () => ({
   watch: vi.fn(),
 }));
 
-// mock internal methods for unit testing (exceptions: slug util functions)
-vi.mock("@/collection/build", () => ({
-  detectCollections: vi.fn().mockReturnValue([
-    { key: "group1", path: "/path/to/group1" },
-    { key: "group2", path: "/path/to/group2" },
-  ]),
-}));
-vi.mock("@/collection/scaffold", () => ({
-  scaffoldSampleDocs: vi.fn().mockResolvedValue(true),
-}));
-vi.mock("@/filetree/build", () => ({
-  buildPages: vi.fn().mockResolvedValue({
-    "test-leaf": {
-      component: () => Promise.resolve("test-leaf-component"),
-      meta: { title: "Test Leaf" },
+vi.mock("@/context", () => ({
+  builderContext: {
+    config: {
+      setConfig: vi.fn(),
+      getConfig: vi.fn(),
     },
+    manifest: {
+      reset: vi.fn(),
+      checkCollection: vi.fn(),
+      addSidebarItem: vi.fn(),
+      addPage: vi.fn(),
+      writeManifest: vi.fn(),
+    },
+    urls: {
+      reset: vi.fn(),
+      addMetaUrl: vi.fn(),
+      inspectPagesUrl: vi.fn(),
+      validate: vi.fn(),
+      report: vi.fn(),
+    },
+  },
+}));
+vi.mock("@/lib/files", () => ({
+  atomicWrite: vi.fn(),
+  parseJsonFile: vi.fn().mockResolvedValue({
+    sidebar: [
+      "[Test-Link](/test-page)",
+      "---",
+      "[Test-Index-Link](/subdirectory)",
+      "[Test-Child-Link](/subdirectory/test-child-page)",
+    ],
+    baseUrl: "collection",
+    key: "collection",
   }),
 }));
-vi.mock("@/filetree/scan", () => ({
-  scanFileTree: vi.fn().mockImplementation((_path: string, prefix: string) =>
-    Promise.resolve({
-      tree: Object.fromEntries(
-        Object.entries(testTree).map(([slug, absPath]) => [
-          `${prefix}/${slug}`,
-          absPath,
-        ]),
-      ),
-      hrefs: new Set([`/${prefix}/test-leaf`]),
-    }),
-  ),
-}));
-vi.mock("@/meta/scan", () => ({
-  scanMeta: vi.fn().mockImplementation((_path: string, key: string) =>
-    Promise.resolve({
-      prefix: `${key}-prefix`,
-      items: [{ type: "link", href: "/test-leaf", label: "Test Leaf" }],
-      links: [
-        {
-          href: `/${key}-prefix/test-leaf`,
-          external: false,
-          disabled: false,
-        },
-      ],
-    }),
-  ),
-}));
-vi.mock("@/utils/files", () => ({
-  atomicWrite: vi.fn().mockResolvedValue(undefined),
-}));
-vi.mock("@/utils/mdx", () => ({
+vi.mock("@/lib/mdx", () => ({
   compileMdx: vi.fn().mockResolvedValue({
     js: "export default function MDXContent() {}",
     frontmatter: { title: "Test Title" },
