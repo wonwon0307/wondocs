@@ -13,9 +13,9 @@ type CandidateEntry = {
 };
 
 export class Pages {
-  private dir: string;
-  private entries: Dirent[];
-  private candidates: CandidateEntry[]; // .md/.mdx 파일의 relPath 배열
+  private readonly dir: string;
+  private readonly entries: Dirent[];
+  private readonly candidates: CandidateEntry[]; // .md/.mdx 파일의 relPath 배열
 
   constructor(collectionDir: string) {
     const dir = join(collectionDir, "pages");
@@ -60,7 +60,7 @@ export class Pages {
       // .md/.mdx 파일은 추가 검사
       if (entry.isFile() && ALLOWED_EXTENSIONS.has(`.${ext}`)) {
         const normUrl = normalizeUrl(relPathToUrl(relPath));
-        const url = baseUrl ? `/${baseUrl}${normUrl}` : normUrl;
+        const url = normalizeUrl(baseUrl ? `/${baseUrl}${normUrl}` : normUrl);
 
         builderContext.urls.inspectPagesUrl(url);
 
