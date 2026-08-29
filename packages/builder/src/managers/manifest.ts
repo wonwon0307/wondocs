@@ -6,7 +6,7 @@ import { atomicWrite } from "@/lib/files";
 import type { WonDocsManifest } from "./types";
 
 export class ManifestManager {
-  private manifest: WonDocsManifest;
+  protected manifest: WonDocsManifest;
   private keySet: Set<string>;
   private baseUrlSet: Set<string>;
 
