@@ -6,10 +6,12 @@
     "@repo/tsconfig": "0.0.0",
     "@repo/vitest-config": "0.0.0",
     "@wondocs/core": "0.0.0",
-    "@wondocs/next-plugin": "0.0.0"
+    "@wondocs/next-plugin": "0.0.0",
+    "@wondocs/builder": "0.0.0"
   },
   "changesets": [
     "big-cloths-cover",
+    "icy-humans-exist",
     "mighty-taxes-shop",
     "mighty-vans-double",
     "ten-taxes-watch"
