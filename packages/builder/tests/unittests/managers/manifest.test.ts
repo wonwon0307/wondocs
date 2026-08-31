@@ -11,8 +11,8 @@ describe("ManifestManager", () => {
   const manager = new TestManifestManager();
 
   it("should add pages and sidebar items and resets correctly", () => {
-    manager.addPage("/page1", { title: "Page 1" });
-    manager.addPage("/page2", { title: "Page 2" });
+    manager.addPage("/page1", { title: "Page 1" }, []);
+    manager.addPage("/page2", { title: "Page 2" }, []);
     manager.addSidebarItem("section1", {
       type: "link",
       label: "Item 1",
@@ -29,10 +29,12 @@ describe("ManifestManager", () => {
         "/page1": {
           component: expect.any(Function),
           meta: { title: "Page 1" },
+          toc: [],
         },
         "/page2": {
           component: expect.any(Function),
           meta: { title: "Page 2" },
+          toc: [],
         },
       },
       sidebar: {
@@ -62,7 +64,7 @@ describe("ManifestManager", () => {
   it("should write the manifest to a file", async () => {
     vi.spyOn(files, "atomicWrite").mockResolvedValue();
 
-    manager.addPage("/page1", { title: "Page 1" });
+    manager.addPage("/page1", { title: "Page 1" }, []);
     manager.addSidebarItem("section1", {
       type: "link",
       label: "Item 1",

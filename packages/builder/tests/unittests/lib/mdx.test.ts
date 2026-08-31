@@ -6,7 +6,10 @@ import { compileMdx } from "@/lib/mdx";
 vi.unmock("@/lib/mdx");
 
 vi.mock("@mdx-js/mdx", () => ({
-  compile: vi.fn().mockResolvedValue("export default function MDXContent() {}"),
+  compile: vi.fn().mockResolvedValue({
+    data: { toc: [] },
+    toString: () => "export default function MDXContent() {}",
+  }),
 }));
 vi.mock("gray-matter", () => ({
   default: vi.fn().mockImplementation((raw: string) => ({
@@ -24,6 +27,7 @@ describe("compileMdx", () => {
     expect(result).toEqual({
       js: "export default function MDXContent() {}",
       frontmatter: { title: "Test Title" },
+      toc: [],
     });
   });
 
