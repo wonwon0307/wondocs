@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { type TocItem } from "remark-flexible-toc";
 import type { DocsFrontmatter } from "@wondocs/core/pages";
 import type { DocsItem } from "@wondocs/core/sidebar";
 
@@ -39,10 +40,15 @@ export class ManifestManager {
     this.baseUrlSet.add(baseUrl);
   }
 
-  public addPage<T extends DocsFrontmatter>(url: string, frontmatter: T): void {
+  public addPage<T extends DocsFrontmatter>(
+    url: string,
+    frontmatter: T,
+    toc: TocItem[],
+  ): void {
     this.manifest.pages[url] = {
       component: () => import(`./pages${url}.js`),
       meta: frontmatter,
+      toc,
     };
   }
 
@@ -61,7 +67,7 @@ export class ManifestManager {
     const pagesEntries = Object.entries(this.manifest.pages)
       .map(([url, page]) => {
         const importPath = JSON.stringify(`./pages${url}.js`);
-        return `  ${JSON.stringify(url)}: { component: () => import(${importPath}), meta: ${JSON.stringify(page.meta)} }`;
+        return `  ${JSON.stringify(url)}: { component: () => import(${importPath}), meta: ${JSON.stringify(page.meta)}, toc: ${JSON.stringify(page.toc)} }`;
       })
       .join(",\n");
 

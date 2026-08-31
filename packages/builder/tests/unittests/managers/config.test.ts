@@ -11,7 +11,10 @@ describe("ConfigManager", () => {
     expect(config).toEqual({
       outDir: expect.any(String),
       contentsDir: expect.any(String),
-      mdx: {},
+      mdx: {
+        rehypePlugins: expect.arrayContaining([expect.any(Function)]),
+        remarkPlugins: expect.arrayContaining([expect.any(Function)]),
+      },
       autoDetectExternal: true,
       allowUnlinkedPages: false,
     });
@@ -34,10 +37,31 @@ describe("ConfigManager", () => {
     expect(config).toEqual({
       outDir: expect.any(String),
       contentsDir: expect.stringContaining("custom-docs"),
-      mdx: { remarkPlugins: [], rehypePlugins: [] },
+      mdx: {
+        remarkPlugins: [expect.any(Function)],
+        rehypePlugins: [expect.any(Function)],
+      },
       autoDetectExternal: false,
       allowUnlinkedPages: true,
     });
+  });
+
+  it("appends user mdx plugins after the built-in toc and slug plugins", () => {
+    const configManager = new ConfigManager();
+
+    const userRemark = () => {};
+    const userRehype = () => {};
+
+    configManager.setConfig({
+      mdx: { remarkPlugins: [userRemark], rehypePlugins: [userRehype] },
+    });
+
+    const { mdx } = configManager.getConfig();
+
+    expect(mdx.remarkPlugins).toHaveLength(2);
+    expect(mdx.remarkPlugins?.[1]).toBe(userRemark);
+    expect(mdx.rehypePlugins).toHaveLength(2);
+    expect(mdx.rehypePlugins?.[1]).toBe(userRehype);
   });
 
   it("handles multiple contentsDir paths correctly", () => {

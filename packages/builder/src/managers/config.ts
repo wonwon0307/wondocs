@@ -1,4 +1,6 @@
 import { join, relative, resolve } from "node:path";
+import rehypeSlug from "rehype-slug";
+import remarkFlexibleToc from "remark-flexible-toc";
 
 import type { ResolvedConfig, WonDocsConfig } from "./types";
 
@@ -20,7 +22,13 @@ export class ConfigManager {
     this.config = {
       outDir: join(this.cwd, ".wondocs"),
       contentsDir: resolvedContentsDir,
-      mdx: userConfig.mdx ?? {},
+      mdx: {
+        remarkPlugins: [
+          remarkFlexibleToc,
+          ...(userConfig.mdx?.remarkPlugins ?? []),
+        ],
+        rehypePlugins: [rehypeSlug, ...(userConfig.mdx?.rehypePlugins ?? [])],
+      },
       autoDetectExternal: userConfig.autoDetectExternal ?? true,
       allowUnlinkedPages: userConfig.allowUnlinkedPages ?? false,
     };

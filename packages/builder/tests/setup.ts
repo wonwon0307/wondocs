@@ -56,5 +56,6 @@ vi.mock("@/lib/mdx", () => ({
   compileMdx: vi.fn().mockResolvedValue({
     js: "export default function MDXContent() {}",
     frontmatter: { title: "Test Title" },
+    toc: [{ text: "Test Heading", id: "test-heading", level: 2 }],
   }),
 }));

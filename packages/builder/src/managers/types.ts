@@ -18,8 +18,15 @@ export type WonDocsConfig = {
    */
   contentsDir?: string | string[];
   /**
-   * MDX compile options - remark/rehype plugins forwarded to @mdx-js/mdx's compile()
-   * @default {}
+   * MDX compile options - extra remark/rehype plugins forwarded to
+   * @mdx-js/mdx's compile().
+   *
+   * `remark-flexible-toc` and `rehype-slug` always run regardless of this
+   * option: they populate each page's `toc` and give headings the `id`s those
+   * entries point at. Plugins listed here are **appended** to those built-ins
+   * (built-ins run first), so custom plugins cannot remove or reorder them.
+   *
+   * @default {} (only the built-in remark-flexible-toc + rehype-slug run)
    */
   mdx?: MdxOptions;
   /**
