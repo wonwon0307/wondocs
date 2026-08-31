@@ -67,7 +67,13 @@ export class ManifestManager {
     const pagesEntries = Object.entries(this.manifest.pages)
       .map(([url, page]) => {
         const importPath = JSON.stringify(`./pages${url}.js`);
-        return `  ${JSON.stringify(url)}: { component: () => import(${importPath}), meta: ${JSON.stringify(page.meta)}, toc: ${JSON.stringify(page.toc)} }`;
+        return (
+          `  ${JSON.stringify(url)}: {\n` +
+          `\tcomponent: () => import(${importPath}),\n` +
+          `\tmeta: ${JSON.stringify(page.meta)},\n` +
+          `\ttoc: ${JSON.stringify(page.toc)}\n` +
+          `  }`
+        );
       })
       .join(",\n");
 

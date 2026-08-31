@@ -1,5 +1,5 @@
 import { builderContext } from "./context";
-import { prepareOutDir } from "./managers/outdir";
+import { cleanOutDir, prepareOutDir } from "./managers/outdir";
 import type { WonDocsConfig } from "./managers/types";
 import { Collection } from "./models/collection";
 
@@ -20,6 +20,7 @@ export async function buildDocs(config: WonDocsConfig): Promise<void> {
 
     builderContext.urls.validate(allowUnlinkedPages);
 
+    await cleanOutDir(outDir);
     await prepareOutDir(outDir);
 
     await Promise.all(
