@@ -83,12 +83,12 @@ export class Pages {
 
     for (const candidate of this.candidates) {
       const { absPath, url } = candidate;
-      const { js, frontmatter } = await compileMdx(absPath, mdx);
+      const { js, frontmatter, toc } = await compileMdx(absPath, mdx);
 
       const outPath = join(outDir, "pages", `${url}.js`);
       await atomicWrite(outPath, js);
 
-      builderContext.manifest.addPage(url, frontmatter);
+      builderContext.manifest.addPage(url, frontmatter, toc);
     }
   }
 }
