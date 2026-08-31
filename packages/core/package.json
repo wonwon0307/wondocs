@@ -42,5 +42,8 @@
     "dev": "tsdown --watch",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "remark-flexible-toc": "^1.2.7"
   }
 }
