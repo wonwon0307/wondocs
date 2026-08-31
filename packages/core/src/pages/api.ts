@@ -7,9 +7,9 @@ import type { DocsFrontmatter, DocsPageData } from "./types";
  * `#wondocs/pages` manifest.
  *
  * @typeParam T - Expected frontmatter shape for this page.
- * @param slug - Page slug (normalized before lookup, so leading/trailing
- * slashes don't matter). Lookups are case-sensitive.
- * @returns The page's `component` loader and `meta` frontmatter.
+ * @param slug - Page slug, looked up in the manifest verbatim: it must match a
+ * manifest key exactly (no leading/trailing slashes, case-sensitive).
+ * @returns The page's `component` loader, `meta` frontmatter, and `toc`.
  * @throws If no page exists for `slug`.
  */
 export function getPage<T extends DocsFrontmatter>(
