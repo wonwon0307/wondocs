@@ -1,5 +1,11 @@
 # @wondocs/core
 
+## 0.1.0-beta.5
+
+### Patch Changes
+
+- [#52](https://github.com/wonwon0307/wondocs/pull/52) [`c7eea88`](https://github.com/wonwon0307/wondocs/commit/c7eea8877de7123d12428af5801067e206f87302) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Make title field optional in DocsFrontmatter and export DocsTocEntry type
+
 ## 0.1.0-beta.4
 
 ### Patch Changes
