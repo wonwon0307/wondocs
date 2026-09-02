@@ -1,7 +1,7 @@
 import type { TocItem as DocsTocEntry } from "remark-flexible-toc";
 
 export interface DocsFrontmatter {
-  title: string;
+  title?: string;
   description?: string;
 }
 
@@ -10,3 +10,5 @@ export type DocsPageData<T extends DocsFrontmatter> = {
   meta: T;
   toc: DocsTocEntry[];
 };
+
+export { DocsTocEntry };
