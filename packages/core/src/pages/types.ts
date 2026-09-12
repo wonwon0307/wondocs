@@ -1,3 +1,4 @@
+import type { MDXContent } from "mdx/types";
 import type { TocItem as DocsTocEntry } from "remark-flexible-toc";
 
 export interface DocsFrontmatter {
@@ -5,8 +6,12 @@ export interface DocsFrontmatter {
   description?: string;
 }
 
+type ComponentReturnType = {
+  default: MDXContent;
+};
+
 export type DocsPageData<T extends DocsFrontmatter> = {
-  component: () => Promise<unknown>;
+  component: () => Promise<ComponentReturnType>;
   meta: T;
   toc: DocsTocEntry[];
 };
