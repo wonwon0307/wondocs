@@ -44,6 +44,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
+    "@types/mdx": "^2.0.14",
     "remark-flexible-toc": "^1.2.7"
   }
 }

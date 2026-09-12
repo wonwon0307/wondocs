@@ -112,6 +112,9 @@ importers:
 
   packages/core:
     devDependencies:
+      '@types/mdx':
+        specifier: ^2.0.14
+        version: 2.0.14
       remark-flexible-toc:
         specifier: ^1.2.7
         version: 1.2.7(unified@11.0.5)
