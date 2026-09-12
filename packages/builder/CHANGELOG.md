@@ -1,5 +1,11 @@
 # @wondocs/builder
 
+## 0.0.1-beta.2
+
+### Patch Changes
+
+- [#54](https://github.com/wonwon0307/wondocs/pull/54) [`f31e7db`](https://github.com/wonwon0307/wondocs/commit/f31e7db97ef33fa9d3d47668e4ae54dc06ec842c) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Add component return type
+
 ## 0.0.1-beta.1
 
 ### Patch Changes
