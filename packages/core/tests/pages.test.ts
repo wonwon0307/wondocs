@@ -1,10 +1,12 @@
+import type { MDXContent } from "mdx/types";
 import * as manifest from "#wondocs/manifest";
 
 import { getPage } from "@/pages/api";
 
 describe("getPage", () => {
+  const testComponent: MDXContent = () => "<div>Test Component</div>";
   const mockPage = {
-    component: () => Promise.resolve(),
+    component: () => Promise.resolve({ default: testComponent }),
     meta: { title: "Test Page" },
     toc: [],
   };
