@@ -11,6 +11,7 @@ describe("getSidebar", () => {
         group2: [],
       },
       children: {},
+      breadcrumbs: {},
     });
   });
 
@@ -26,6 +27,7 @@ describe("getSidebar", () => {
         "": [],
       },
       children: {},
+      breadcrumbs: {},
     });
 
     const group = getSidebar();

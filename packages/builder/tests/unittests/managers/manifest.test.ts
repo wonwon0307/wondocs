@@ -46,6 +46,7 @@ describe("ManifestManager", () => {
       children: {
         "/": ["/page1", "/page2"],
       },
+      breadcrumbs: {},
     });
 
     manager.reset();
@@ -53,6 +54,7 @@ describe("ManifestManager", () => {
       pages: {},
       sidebar: {},
       children: {},
+      breadcrumbs: {},
     });
   });
 
@@ -104,6 +106,25 @@ describe("ManifestManager", () => {
       "test-output/manifest.js",
       expect.stringContaining("export default {"),
     );
+  });
+
+  it("computes breadcrumbs from the sidebar when writing the manifest", async () => {
+    vi.spyOn(files, "atomicWrite").mockResolvedValue();
+    const isolated = new TestManifestManager();
+
+    isolated.addSidebarItem("section1", {
+      type: "group",
+      label: "Guides",
+      items: [{ type: "link", label: "Item 1", url: "/page1" }],
+    });
+
+    await isolated.writeManifest("./test-output");
+
+    expect(isolated.getManifest().breadcrumbs).toEqual({
+      section1: {
+        "/page1": [{ label: "Guides" }, { label: "Item 1", url: "/page1" }],
+      },
+    });
   });
 
   it("COVERAGE PURPOSE: call component API", async () => {

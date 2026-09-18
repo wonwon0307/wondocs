@@ -24,3 +24,15 @@ export interface DocsSeparator {
 }
 
 export type DocsItem = DocsLink | DocsGroup | DocsSeparator;
+
+export interface DocsCrumb {
+  label: string;
+  /**
+   * Target URL for the crumb. Absent for `group` ancestors (which are not
+   * links) and for `disabled` links, so the renderer shows plain text.
+   */
+  url?: string;
+  icon?: string;
+  external?: boolean;
+  disabled?: boolean;
+}

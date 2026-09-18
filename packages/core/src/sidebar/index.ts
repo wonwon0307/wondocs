@@ -1,3 +1,9 @@
-export { getSidebar } from "./api";
+export { getBreadcrumbs, getSidebar } from "./api";
 
-export type { DocsItem, DocsLink, DocsGroup, DocsSeparator } from "./types";
+export type {
+  DocsCrumb,
+  DocsItem,
+  DocsLink,
+  DocsGroup,
+  DocsSeparator,
+} from "./types";
