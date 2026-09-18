@@ -43,10 +43,36 @@ describe("ManifestManager", () => {
           { type: "link", label: "Item 2", url: "/page2" },
         ],
       },
+      children: {
+        "/": ["/page1", "/page2"],
+      },
     });
 
     manager.reset();
-    expect(manager.getManifest()).toEqual({ pages: {}, sidebar: {} });
+    expect(manager.getManifest()).toEqual({
+      pages: {},
+      sidebar: {},
+      children: {},
+    });
+  });
+
+  it("indexes nested pages under their parent url, independent of the sidebar", () => {
+    manager.addPage("/parent/child1", { title: "Child 1" }, []);
+    manager.addPage("/parent/child2", { title: "Child 2" }, []);
+
+    expect(manager.getManifest().children).toEqual({
+      "/parent": ["/parent/child1", "/parent/child2"],
+    });
+
+    manager.reset();
+  });
+
+  it("does not index the root page as its own child", () => {
+    manager.addPage("/", { title: "Home" }, []);
+
+    expect(manager.getManifest().children).toEqual({});
+
+    manager.reset();
   });
 
   it("should throw an error for duplicate collection keys and baseUrls", () => {

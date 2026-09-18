@@ -16,4 +16,8 @@ export type DocsPageData<T extends DocsFrontmatter> = {
   toc: DocsTocEntry[];
 };
 
+export type DocsPageChild<T extends DocsFrontmatter> = DocsPageData<T> & {
+  url: string;
+};
+
 export { DocsTocEntry };
