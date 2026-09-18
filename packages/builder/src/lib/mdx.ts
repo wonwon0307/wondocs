@@ -33,7 +33,7 @@ export async function compileMdx(
 
   return {
     js: String(compiled),
-    frontmatter: data as DocsFrontmatter,
+    frontmatter: data,
     toc: compiled.data.toc as TocItem[],
   };
 }

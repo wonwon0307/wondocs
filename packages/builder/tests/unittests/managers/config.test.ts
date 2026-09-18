@@ -38,7 +38,7 @@ describe("ConfigManager", () => {
       outDir: expect.any(String),
       contentsDir: expect.stringContaining("custom-docs"),
       mdx: {
-        remarkPlugins: [expect.any(Function)],
+        remarkPlugins: [expect.any(Function), expect.any(Function)],
         rehypePlugins: [expect.any(Function)],
       },
       autoDetectExternal: false,
@@ -58,8 +58,8 @@ describe("ConfigManager", () => {
 
     const { mdx } = configManager.getConfig();
 
-    expect(mdx.remarkPlugins).toHaveLength(2);
-    expect(mdx.remarkPlugins?.[1]).toBe(userRemark);
+    expect(mdx.remarkPlugins).toHaveLength(3);
+    expect(mdx.remarkPlugins?.[2]).toBe(userRemark);
     expect(mdx.rehypePlugins).toHaveLength(2);
     expect(mdx.rehypePlugins?.[1]).toBe(userRehype);
   });
