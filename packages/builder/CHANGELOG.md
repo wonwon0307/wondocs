@@ -1,5 +1,11 @@
 # @wondocs/builder
 
+## 0.0.1-beta.4
+
+### Patch Changes
+
+- [#60](https://github.com/wonwon0307/wondocs/pull/60) [`c67c1db`](https://github.com/wonwon0307/wondocs/commit/c67c1db236489b3877dc76861e3c51e608ac87ea) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Add children and breadcrumbs to manifest
+
 ## 0.0.1-beta.3
 
 ### Patch Changes
