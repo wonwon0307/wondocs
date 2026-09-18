@@ -18,6 +18,7 @@ describe("getPage", () => {
       },
       sidebar: {},
       children: {},
+      breadcrumbs: {},
     });
   });
 
@@ -56,6 +57,7 @@ describe("getPageChildren", () => {
       children: {
         "/parent": ["/parent/child1", "/parent/child2"],
       },
+      breadcrumbs: {},
     });
   });
 
