@@ -1,6 +1,6 @@
 import type { CompileOptions } from "@mdx-js/mdx";
 import type { DocsFrontmatter, DocsPageData } from "@wondocs/core/pages";
-import type { DocsItem } from "@wondocs/core/sidebar";
+import type { DocsCrumb, DocsItem } from "@wondocs/core/sidebar";
 
 // #region Config Types
 // @mdx-js/mdx의 compile()에 그대로 전달되는 remark/rehype plugin 옵션
@@ -55,4 +55,5 @@ export type WonDocsManifest = {
   pages: Record<string, DocsPageData<DocsFrontmatter>>;
   sidebar: Record<string, DocsItem[]>;
   children: Record<string, string[]>;
+  breadcrumbs: Record<string, Record<string, DocsCrumb[]>>;
 };
