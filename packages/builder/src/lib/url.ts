@@ -36,3 +36,9 @@ export function normalizeUrl(url: string): string {
     ? withLeadingSlash.slice(0, -1)
     : withLeadingSlash;
 }
+
+export function getParentUrl(url: string): string {
+  const lastSlash = url.lastIndexOf("/");
+  const parent = url.slice(0, lastSlash);
+  return parent === "" ? "/" : parent;
+}

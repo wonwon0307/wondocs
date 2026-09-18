@@ -4,6 +4,7 @@ import type { DocsFrontmatter } from "@wondocs/core/pages";
 import type { DocsItem } from "@wondocs/core/sidebar";
 
 import { atomicWrite } from "@/lib/files";
+import { getParentUrl } from "@/lib/url";
 import type { WonDocsManifest } from "./types";
 
 export class ManifestManager {
@@ -15,6 +16,7 @@ export class ManifestManager {
     this.manifest = {
       pages: {},
       sidebar: {},
+      children: {},
     };
     this.keySet = new Set();
     this.baseUrlSet = new Set();
@@ -24,6 +26,7 @@ export class ManifestManager {
     this.manifest = {
       pages: {},
       sidebar: {},
+      children: {},
     };
     this.keySet.clear();
     this.baseUrlSet.clear();
@@ -50,6 +53,16 @@ export class ManifestManager {
       meta: frontmatter,
       toc,
     };
+
+    if (url === "/") {
+      return;
+    }
+
+    const parentUrl = getParentUrl(url);
+    if (!this.manifest.children[parentUrl]) {
+      this.manifest.children[parentUrl] = [];
+    }
+    this.manifest.children[parentUrl].push(url);
   }
 
   public addSidebarItem(key: string, item: DocsItem): void {
@@ -81,6 +94,7 @@ export class ManifestManager {
       `export default {\n` +
       `  pages: {\n${pagesEntries}\n  },\n` +
       `  sidebar: ${JSON.stringify(this.manifest.sidebar, null, 2)},\n` +
+      `  children: ${JSON.stringify(this.manifest.children, null, 2)},\n` +
       `};\n`;
 
     await atomicWrite(manifestPath, manifestContent);
