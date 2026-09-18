@@ -1,5 +1,11 @@
 # @wondocs/builder
 
+## 0.0.1-beta.3
+
+### Patch Changes
+
+- [#56](https://github.com/wonwon0307/wondocs/pull/56) [`126989b`](https://github.com/wonwon0307/wondocs/commit/126989b9b0e15972f951fc8801ae21e0ca8ea52d) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Add Gfm plugin by default
+
 ## 0.0.1-beta.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @wondocs/next-plugin
 
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- [#56](https://github.com/wonwon0307/wondocs/pull/56) [`126989b`](https://github.com/wonwon0307/wondocs/commit/126989b9b0e15972f951fc8801ae21e0ca8ea52d) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Add Gfm plugin by default
+
+- Updated dependencies [[`126989b`](https://github.com/wonwon0307/wondocs/commit/126989b9b0e15972f951fc8801ae21e0ca8ea52d)]:
+  - @wondocs/core@0.1.0-beta.7
+
 ## 0.1.0-beta.6
 
 ### Patch Changes
