@@ -10,6 +10,7 @@ describe("getSidebar", () => {
         group1: [],
         group2: [],
       },
+      children: {},
     });
   });
 
@@ -24,6 +25,7 @@ describe("getSidebar", () => {
       sidebar: {
         "": [],
       },
+      children: {},
     });
 
     const group = getSidebar();
