@@ -54,4 +54,5 @@ export type ResolvedConfig = Required<WonDocsConfig> & {
 export type WonDocsManifest = {
   pages: Record<string, DocsPageData<DocsFrontmatter>>;
   sidebar: Record<string, DocsItem[]>;
+  children: Record<string, string[]>;
 };
