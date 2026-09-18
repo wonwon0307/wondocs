@@ -1,6 +1,7 @@
 import { join, relative, resolve } from "node:path";
 import rehypeSlug from "rehype-slug";
 import remarkFlexibleToc from "remark-flexible-toc";
+import remarkGfm from "remark-gfm";
 
 import type { ResolvedConfig, WonDocsConfig } from "./types";
 
@@ -25,6 +26,7 @@ export class ConfigManager {
       mdx: {
         remarkPlugins: [
           remarkFlexibleToc,
+          remarkGfm,
           ...(userConfig.mdx?.remarkPlugins ?? []),
         ],
         rehypePlugins: [rehypeSlug, ...(userConfig.mdx?.rehypePlugins ?? [])],
