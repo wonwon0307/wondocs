@@ -1,3 +1,8 @@
-export { getPage } from "./api";
+export { getPage, getPageChildren } from "./api";
 
-export type { DocsFrontmatter, DocsPageData, DocsTocEntry } from "./types";
+export type {
+  DocsFrontmatter,
+  DocsPageChild,
+  DocsPageData,
+  DocsTocEntry,
+} from "./types";
