@@ -1,4 +1,4 @@
-export { getSidebar } from "./api";
+export { getBreadcrumbs, getSidebar } from "./api";
 
 export type {
   DocsCrumb,

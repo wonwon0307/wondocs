@@ -25,9 +25,6 @@ export interface DocsSeparator {
 
 export type DocsItem = DocsLink | DocsGroup | DocsSeparator;
 
-/**
- * A single step in a page's breadcrumb trail, derived from the sidebar tree.
- */
 export interface DocsCrumb {
   label: string;
   /**
