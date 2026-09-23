@@ -77,6 +77,18 @@ describe("ManifestManager", () => {
     manager.reset();
   });
 
+  it("stores null meta for pages without frontmatter", () => {
+    manager.addPage("/no-frontmatter", null, []);
+
+    expect(manager.getManifest().pages["/no-frontmatter"]).toEqual({
+      component: expect.any(Function),
+      meta: null,
+      toc: [],
+    });
+
+    manager.reset();
+  });
+
   it("should throw an error for duplicate collection keys and baseUrls", () => {
     manager.checkCollection("key1", "/baseUrl1");
 
@@ -105,6 +117,19 @@ describe("ManifestManager", () => {
     expect(files.atomicWrite).toHaveBeenCalledWith(
       "test-output/manifest.js",
       expect.stringContaining("export default {"),
+    );
+  });
+
+  it("serializes null meta as `meta: null` when writing the manifest", async () => {
+    vi.spyOn(files, "atomicWrite").mockResolvedValue();
+    const isolated = new TestManifestManager();
+
+    isolated.addPage("/no-frontmatter", null, []);
+    await isolated.writeManifest("./test-output");
+
+    expect(files.atomicWrite).toHaveBeenCalledWith(
+      "test-output/manifest.js",
+      expect.stringContaining("meta: null"),
     );
   });
 

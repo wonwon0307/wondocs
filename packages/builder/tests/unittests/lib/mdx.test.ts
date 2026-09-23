@@ -1,5 +1,6 @@
 import * as fs from "node:fs/promises";
 import * as mdxCompiler from "@mdx-js/mdx";
+import matter from "gray-matter";
 
 import { compileMdx } from "@/lib/mdx";
 
@@ -29,6 +30,18 @@ describe("compileMdx", () => {
       frontmatter: { title: "Test Title" },
       toc: [],
     });
+  });
+
+  it("returns null frontmatter when no frontmatter block exists", async () => {
+    vi.spyOn(fs, "readFile").mockResolvedValue("# Test MDX Content");
+    vi.mocked(matter).mockReturnValueOnce({
+      data: {},
+      content: "# Test MDX Content",
+    } as ReturnType<typeof matter>);
+
+    const result = await compileMdx("test.mdx");
+
+    expect(result.frontmatter).toBeNull();
   });
 
   it("compiles with outputFormat 'program' so pages are import()-able", async () => {
