@@ -1,5 +1,11 @@
 # @wondocs/builder
 
+## 0.0.1-beta.5
+
+### Patch Changes
+
+- [#64](https://github.com/wonwon0307/wondocs/pull/64) [`28132ea`](https://github.com/wonwon0307/wondocs/commit/28132eae3933d618cd251ff5bb236ccaa185125c) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Save meta as null when frontmatter is not given
+
 ## 0.0.1-beta.4
 
 ### Patch Changes

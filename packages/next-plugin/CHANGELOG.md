@@ -1,5 +1,12 @@
 # @wondocs/next-plugin
 
+## 0.1.0-beta.10
+
+### Patch Changes
+
+- Updated dependencies [[`28132ea`](https://github.com/wonwon0307/wondocs/commit/28132eae3933d618cd251ff5bb236ccaa185125c)]:
+  - @wondocs/core@0.1.0-beta.10
+
 ## 0.1.0-beta.9
 
 ### Patch Changes
