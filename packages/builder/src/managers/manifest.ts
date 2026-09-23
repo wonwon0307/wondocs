@@ -48,7 +48,7 @@ export class ManifestManager {
 
   public addPage<T extends DocsFrontmatter>(
     url: string,
-    frontmatter: T,
+    frontmatter: T | null,
     toc: TocItem[],
   ): void {
     this.manifest.pages[url] = {

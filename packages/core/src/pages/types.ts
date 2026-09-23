@@ -14,7 +14,7 @@ export type DocsMdxModule = {
 
 export type DocsPageData<T extends DocsFrontmatter> = {
   component: () => Promise<DocsMdxModule>;
-  meta: T;
+  meta: T | null;
   toc: DocsTocEntry[];
 };
 

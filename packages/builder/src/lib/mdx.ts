@@ -8,7 +8,7 @@ import type { MdxOptions } from "@/managers/types";
 
 interface CompileResult {
   js: string;
-  frontmatter: DocsFrontmatter;
+  frontmatter: DocsFrontmatter | null;
   toc: TocItem[];
 }
 
@@ -22,6 +22,10 @@ export async function compileMdx(
   // 파일 내용을 frontmatter와 content로 분리
   const { data, content } = matter(raw);
 
+  // frontmatter 블록이 아예 없거나 비어 있으면 gray-matter는 빈 객체를 반환하는데,
+  // 이 경우 "frontmatter가 없음"을 구분할 수 있도록 null로 취급한다.
+  const frontmatter = Object.keys(data).length === 0 ? null : data;
+
   // content는 MDX로 컴파일한다.
   // "program" 형식으로 컴파일해야 import()로 바로 불러올 수 있는 완전한 ES 모듈이 생성된다.
   // ("function-body"는 run()으로 eval해야 하는 함수 본문만 생성하므로, 여기서 쓰면 안 된다)
@@ -33,7 +37,7 @@ export async function compileMdx(
 
   return {
     js: String(compiled),
-    frontmatter: data,
+    frontmatter,
     toc: compiled.data.toc as TocItem[],
   };
 }
