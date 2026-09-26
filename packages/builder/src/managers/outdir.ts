@@ -15,9 +15,12 @@ export async function cleanOutDir(outDir: string): Promise<void> {
 
 export async function prepareOutDir(outDir: string): Promise<void> {
   const gitignorePath = join(outDir, ".gitignore");
+  const prettierIgnorePath = join(outDir, ".prettierignore");
   try {
     await access(gitignorePath);
+    await access(prettierIgnorePath);
   } catch {
     await atomicWrite(gitignorePath, "*\n");
+    await atomicWrite(prettierIgnorePath, "*\n");
   }
 }
