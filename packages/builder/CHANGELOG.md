@@ -1,5 +1,11 @@
 # @wondocs/builder
 
+## 0.0.1-beta.6
+
+### Patch Changes
+
+- [#66](https://github.com/wonwon0307/wondocs/pull/66) [`5d9a109`](https://github.com/wonwon0307/wondocs/commit/5d9a109ee00f687aa2e41e420502dc7b41e47237) Thanks [@wonwon0307](https://github.com/wonwon0307)! - Write prettier ignore in outdir
+
 ## 0.0.1-beta.5
 
 ### Patch Changes
