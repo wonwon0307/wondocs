@@ -1,5 +1,15 @@
 # @wondocs/next-plugin
 
+## 0.1.0-beta.12
+
+### Patch Changes
+
+- [#71](https://github.com/wonwon0307/wondocs/pull/71) [`413176d`](https://github.com/wonwon0307/wondocs/commit/413176d976432fe2f0d49ac94d946bf4eabb2ee3) Thanks [@wonwon0307](https://github.com/wonwon0307)! - - core: `getSidebar()` and `getBreadcrumbs(url)` now resolve to the project's sole collection when `key` is omitted, instead of looking up an unkeyed `""` group the builder never produces. They throw if the project doesn't have exactly one collection.
+  - builder: the unlinked-pages build log now reports only the count instead of listing every URL.
+  - builder: revert writing `.prettierignore` into the output directory; only `.gitignore` is written.
+- Updated dependencies [[`413176d`](https://github.com/wonwon0307/wondocs/commit/413176d976432fe2f0d49ac94d946bf4eabb2ee3)]:
+  - @wondocs/core@0.1.0-beta.12
+
 ## 0.1.0-beta.11
 
 ### Patch Changes
