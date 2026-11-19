@@ -1,27 +1,4 @@
 {
   "mode": "pre",
-  "tag": "beta",
-  "initialVersions": {
-    "@repo/eslint-config": "0.0.0",
-    "@repo/tsconfig": "0.0.0",
-    "@repo/vitest-config": "0.0.0",
-    "@wondocs/core": "0.0.0",
-    "@wondocs/next-plugin": "0.0.0",
-    "@wondocs/builder": "0.0.0"
-  },
-  "changesets": [
-    "big-cloths-cover",
-    "brave-rivers-throw",
-    "eager-falcons-mix",
-    "eager-vans-write",
-    "gentle-dodos-accept",
-    "icy-humans-exist",
-    "mighty-taxes-shop",
-    "mighty-vans-double",
-    "nice-pianos-tickle",
-    "rare-jokes-taste",
-    "sparkly-spoons-flow",
-    "ten-taxes-watch",
-    "wet-sails-smash"
-  ]
+  "tag": "beta"
 }
