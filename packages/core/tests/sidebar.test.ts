@@ -20,18 +20,31 @@ describe("getSidebar", () => {
     expect(group).toEqual([]);
   });
 
-  it("should return the single group if no parameter is provided", () => {
-    vi.spyOn(manifest, "default", "get").mockReturnValueOnce({
+  it("should return the sole group if no parameter is provided", () => {
+    const items = [{ type: "separator" as const }];
+    vi.spyOn(manifest, "default", "get").mockReturnValue({
       pages: {},
       sidebar: {
-        "": [],
+        docs: items,
       },
       children: {},
       breadcrumbs: {},
     });
 
-    const group = getSidebar();
-    expect(group).toEqual([]);
+    expect(getSidebar()).toBe(items);
+  });
+
+  it("should throw if no parameter is provided and there are no groups", () => {
+    vi.spyOn(manifest, "default", "get").mockReturnValue({
+      pages: {},
+      sidebar: {},
+      children: {},
+      breadcrumbs: {},
+    });
+
+    expect(() => getSidebar()).toThrow(
+      "[WonDocs] No single group found. Available groups: ",
+    );
   });
 
   it("should throw if no parameter is provided and no single group exists", () => {

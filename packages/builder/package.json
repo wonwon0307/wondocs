@@ -20,11 +20,11 @@
   "devDependencies": {
     "@mdx-js/mdx": "^3.1.1",
     "@wondocs/core": "workspace:*",
-    "chokidar": "^5.0.0",
+    "chokidar": "^6.0.0",
     "gray-matter": "^4.0.3",
     "rehype-slug": "^6.0.0",
-    "remark-flexible-toc": "^1.2.7",
+    "remark-flexible-toc": "^1.3.2",
     "remark-gfm": "^4.0.1",
-    "zod": "^4.5.4"
+    "zod": "^4.6.7"
   }
 }

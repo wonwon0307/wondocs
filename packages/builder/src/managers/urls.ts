@@ -89,8 +89,7 @@ export class UrlManager {
 
     if (this.unlinkedUrls.size > 0) {
       console.log(
-        `[WonDocs] Found ${this.unlinkedUrls.size} unlinked pages in the pages directory: ` +
-          `${Array.from(this.unlinkedUrls).join(", ")}`,
+        `[WonDocs] Found ${this.unlinkedUrls.size} unlinked pages in the pages directory.`,
       );
     }
 

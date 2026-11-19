@@ -31,7 +31,7 @@ describe("getBreadcrumbs", () => {
       link("/docs/roadmap", { disabled: true }),
       link("https://example.com", { external: true }),
     ],
-    "": [link("/single")],
+    single: [link("/single")],
   };
 
   const breadcrumbs: Record<string, Record<string, DocsCrumb[]>> = {
@@ -64,7 +64,7 @@ describe("getBreadcrumbs", () => {
         },
       ],
     },
-    "": {
+    single: {
       "/single": [{ label: "/single", url: "/single" }],
     },
   };
@@ -111,10 +111,23 @@ describe("getBreadcrumbs", () => {
     expect(crumb.external).toBe(true);
   });
 
-  it("resolves the default group when no key is given", () => {
+  it("resolves the sole group when no key is given", () => {
+    vi.spyOn(manifest, "default", "get").mockReturnValue({
+      pages: {},
+      sidebar: { single: sidebar.single },
+      children: {},
+      breadcrumbs: { single: breadcrumbs.single },
+    });
+
     expect(getBreadcrumbs("/single")).toEqual([
       { label: "/single", url: "/single" },
     ]);
+  });
+
+  it("throws when no key is given and there are multiple groups", () => {
+    expect(() => getBreadcrumbs("/single")).toThrow(
+      "[WonDocs] No single group found. Available groups: docs, single",
+    );
   });
 
   it("throws when no link matches the url", () => {
