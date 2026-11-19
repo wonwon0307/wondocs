@@ -3,33 +3,45 @@ import manifest from "#wondocs/manifest";
 import type { DocsCrumb, DocsItem } from "./types";
 
 /**
- * Looks up a sidebar group from the generated `#wondocs/sidebar` manifest.
+ * Resolves a collection key against the generated manifest. An omitted key
+ * resolves to the project's sole collection.
  *
- * @param key - Collection key to look up. Omit it to fetch the default
- * (unkeyed, `""`) group, used when a project has a single collection.
- * @returns The sidebar items for that group.
- * @throws If no group exists for `key` (or no default group when `key` is omitted).
+ * @throws If `key` matches no group, or `key` is omitted and the project does
+ * not have exactly one collection.
  */
-export function getSidebar(key?: string): DocsItem[] {
+function resolveKey(key?: string): string {
+  const keys = Object.keys(manifest.sidebar);
+
   if (key !== undefined) {
-    const group = manifest.sidebar[key];
-    if (!group) {
+    if (!keys.includes(key)) {
       throw new Error(
         `[WonDocs] No group found for key "${key}". ` +
-          `Available groups: ${Object.keys(manifest.sidebar).join(", ")}`,
+          `Available groups: ${keys.join(", ")}`,
       );
     }
-    return group;
+    return key;
   }
 
-  const group = manifest.sidebar[""];
-  if (!group) {
+  if (keys.length !== 1) {
     throw new Error(
       `[WonDocs] No single group found. ` +
-        `Available groups: ${Object.keys(manifest.sidebar).join(", ")}`,
+        `Available groups: ${keys.join(", ")}`,
     );
   }
-  return group;
+  return keys[0];
+}
+
+/**
+ * Looks up a sidebar group from the generated `#wondocs/sidebar` manifest.
+ *
+ * @param key - Collection key to look up. Omit it to fetch the sole
+ * collection's group, for projects with a single collection.
+ * @returns The sidebar items for that group.
+ * @throws If no group exists for `key`, or `key` is omitted and the project
+ * does not have exactly one collection.
+ */
+export function getSidebar(key?: string): DocsItem[] {
+  return manifest.sidebar[resolveKey(key)];
 }
 
 /**
@@ -40,17 +52,13 @@ export function getSidebar(key?: string): DocsItem[] {
  * @param url - Page URL, matched verbatim against sidebar `link` urls (same
  * lookup semantics as `getPage`: no normalization, case-sensitive).
  * @param key - Collection key, resolved the same way as {@link getSidebar}.
- * Omit it to use the default (unkeyed, `""`) group.
+ * Omit it to use the sole collection's group.
  * @returns The ancestor crumbs, ending with the page itself. Group ancestors
  * appear as label-only crumbs; the final crumb carries the page's own `url`.
  * @throws If `key` resolves to no sidebar group, or no link matches `url`.
  */
 export function getBreadcrumbs(url: string, key?: string): DocsCrumb[] {
-  // Reused only for its key-resolution/validation error messages; the trail
-  // itself comes from the precomputed index below.
-  getSidebar(key);
-
-  const trail = manifest.breadcrumbs[key ?? ""]?.[url];
+  const trail = manifest.breadcrumbs[resolveKey(key)]?.[url];
 
   if (!trail) {
     throw new Error(`[WonDocs] No breadcrumb trail found for url "${url}".`);
