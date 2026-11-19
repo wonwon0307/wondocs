@@ -5,7 +5,7 @@
     { "repo": "wonwon0307/wondocs" }
   ],
   "commit": false,
-  "fixed": [],
+  "fixed": [["@wondocs/core", "@wondocs/builder", "@wondocs/next-plugin"]],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
