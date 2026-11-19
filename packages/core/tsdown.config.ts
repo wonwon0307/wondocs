@@ -8,7 +8,7 @@ export default defineConfig([
     clean: false,
     deps: {
       onlyBundle: false,
-      neverBundle: ["#wondocs/manifest"],
+      neverBundle: ["#wondocs/manifest", "remark-flexible-toc", "mdx/types"],
     },
   },
 ]);
