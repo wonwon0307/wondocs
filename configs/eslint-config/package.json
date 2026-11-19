@@ -12,6 +12,7 @@
     "@eslint/json": "^2.1.1",
     "@eslint/markdown": "^9.0.0",
     "globals": "^17.14.0",
+    "jiti": "^2.7.0",
     "typescript-eslint": "^8.73.0"
   }
 }

@@ -69,7 +69,7 @@ describe("UrlManager", () => {
       "[WonDocs] Build report: Successfully linked 1 URLs out of 1 in the sidebar.",
     );
     expect(console.log).toHaveBeenCalledWith(
-      "[WonDocs] Found 1 unlinked pages in the pages directory: /page2",
+      "[WonDocs] Found 1 unlinked pages in the pages directory.",
     );
   });
 
