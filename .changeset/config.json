@@ -10,5 +10,6 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@repo/*"]
+  "ignore": ["@repo/*"],
+  "privatePackages": { "version": true, "tag": false }
 }
